@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.300.5",
+            "version": "3.300.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "9e0cfc4ce77df934b5f0ced6ffac29fd88237266"
+                "reference": "421be99f109a330acd4297abe2f41069eccbf447"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9e0cfc4ce77df934b5f0ced6ffac29fd88237266",
-                "reference": "9e0cfc4ce77df934b5f0ced6ffac29fd88237266",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/421be99f109a330acd4297abe2f41069eccbf447",
+                "reference": "421be99f109a330acd4297abe2f41069eccbf447",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.300.5"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.300.8"
             },
-            "time": "2024-02-26T19:10:06+00:00"
+            "time": "2024-02-29T19:06:50+00:00"
         },
         {
             "name": "brick/math",
@@ -9329,16 +9329,16 @@
         },
         {
             "name": "unisharp/laravel-filemanager",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UniSharp/laravel-filemanager.git",
-                "reference": "6e79e4e59add5aa365df97c67ea8a0142c15918c"
+                "reference": "7014e5d8404cb0b072360babbe3e134fcaf9f13a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/6e79e4e59add5aa365df97c67ea8a0142c15918c",
-                "reference": "6e79e4e59add5aa365df97c67ea8a0142c15918c",
+                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/7014e5d8404cb0b072360babbe3e134fcaf9f13a",
+                "reference": "7014e5d8404cb0b072360babbe3e134fcaf9f13a",
                 "shasum": ""
             },
             "require": {
@@ -9403,9 +9403,9 @@
             ],
             "support": {
                 "issues": "https://github.com/UniSharp/laravel-filemanager/issues",
-                "source": "https://github.com/UniSharp/laravel-filemanager/tree/v2.7.0"
+                "source": "https://github.com/UniSharp/laravel-filemanager/tree/v2.7.1"
             },
-            "time": "2024-02-07T07:42:57+00:00"
+            "time": "2024-02-27T14:21:27+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -11697,24 +11697,24 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.18.0",
+            "version": "v1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d4f454f7e1193933f04e6500de3e79191648ed0c"
+                "reference": "67a759e7d8746d501c41536ba40cd9c0a07d6a87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d4f454f7e1193933f04e6500de3e79191648ed0c",
-                "reference": "d4f454f7e1193933f04e6500de3e79191648ed0c",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/67a759e7d8746d501c41536ba40cd9c0a07d6a87",
+                "reference": "67a759e7d8746d501c41536ba40cd9c0a07d6a87",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.2 || ^2.0",
                 "php": "^7.2 || 8.0.* || 8.1.* || 8.2.* || 8.3.*",
                 "phpdocumentor/reflection-docblock": "^5.2",
-                "sebastian/comparator": "^3.0 || ^4.0 || ^5.0",
-                "sebastian/recursion-context": "^3.0 || ^4.0 || ^5.0"
+                "sebastian/comparator": "^3.0 || ^4.0 || ^5.0 || ^6.0",
+                "sebastian/recursion-context": "^3.0 || ^4.0 || ^5.0 || ^6.0"
             },
             "require-dev": {
                 "phpspec/phpspec": "^6.0 || ^7.0",
@@ -11760,9 +11760,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/v1.18.0"
+                "source": "https://github.com/phpspec/prophecy/tree/v1.19.0"
             },
-            "time": "2023-12-07T16:22:33+00:00"
+            "time": "2024-02-29T11:52:51+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
