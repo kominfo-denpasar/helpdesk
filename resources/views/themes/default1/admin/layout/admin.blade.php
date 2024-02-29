@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Faveo | HELP DESK</title>
+        <title>Dashboard Admin | Portal Bantuan</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- faveo favicon -->
         <link href="{{asset("lb-faveo/media/images/favicon.ico")}}" rel="shortcut icon">

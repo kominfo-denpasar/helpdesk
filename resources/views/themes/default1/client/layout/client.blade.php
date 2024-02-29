@@ -96,7 +96,7 @@
 
               .nav-item .dropdown-menu{right: unset !important; left: unset!important;;margin-left: -6px;}
 
-              .btn-primary { background-color:#009aba !important;border-color:#00c0ef !important; }
+              .btn-primary { background-color:#003379 !important;border-color:#00c0ef !important; }
 
             .breadcrumb-item+.breadcrumb-item::before {color: #ffffff !important;}
         </style>
@@ -121,7 +121,7 @@
                             <a href="{{url('/')}}" rel="home">
                                 @endif
                                 @if($company->use_logo == 1)
-                                <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="User Image" width="200px" height="200px"/>
+                                <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="User Image" width="150px" height="150px"/>
                                 @else
                                 @if($system->name)
                                 {!! $system->name !!}
@@ -197,16 +197,16 @@
 
                                                 <div class="banner-content" id="dropdown_content">
 
-                                                    <a href="{{url('auth/logout')}}" class="btn btn-custom btn-sm text-white profile_btn" style="background-color: #009aba; hov: #00c0ef; color: #fff "">{!! Lang::get('lang.log_out') !!}</a>
+                                                    <a href="{{url('auth/logout')}}" class="btn btn-custom btn-sm text-white profile_btn" style="background-color: #003379; hov: #00c0ef; color: #fff "">{!! Lang::get('lang.log_out') !!}</a>
 
                                                     @if(Auth::user())
                                                     @if(Auth::user()->role != 'user')
-                                                        <a href="{{url('dashboard')}}" class="btn btn-custom btn-sm text-white profile_btn" style="background-color: #009aba; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.dashboard') !!}</a>
+                                                        <a href="{{url('dashboard')}}" class="btn btn-custom btn-sm text-white profile_btn" style="background-color: #003379; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.dashboard') !!}</a>
                                                     @endif
                                                     @endif
                                                     @if(Auth::user())
                                                     @if(Auth::user()->role == 'user')
-                                                    <a href="{{url('client-profile')}}" class="btn btn-custom btn-sm text-white profile_btn" style="background-color: #009aba; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.profile') !!}</a>
+                                                    <a href="{{url('client-profile')}}" class="btn btn-custom btn-sm text-white profile_btn" style="background-color: #003379; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.profile') !!}</a>
                                                     @endif
                                                     @endif
                                                 </div>
@@ -292,7 +292,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                            <button type="submit" class="btn btn-custom" style="background-color: #009aba; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.login') !!}</button>
+                                            <button type="submit" class="btn btn-custom" style="background-color: #003379; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.login') !!}</button>
                                         {!! Form::close() !!}
                                     </div>
 
@@ -315,9 +315,9 @@
                         <div class="form-border" style="z-index: 0;width: 85%;">
                             <div class="form-inline ">
                                 <div class="form-group input-group " style="width: 98% ">
-                                    <input type="text" name="s" class="search-field form-control" title="Enter search term" placeholder="Have a question? Type your search term here..." required="" style="width: 80%">
+                                    <input type="text" name="s" class="search-field form-control" title="Enter search term" placeholder="Ada yang ingin ditanyakan? Ketik pencarian Anda di sini..." required="" style="width: 80%">
                                     <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-custom btn-md " style="margin-left: 20% ;background-color: #009aba; hov: #00c0ef; color: #fff ">Search</button>
+                                        <button type="submit" class="btn btn-custom btn-md " style="margin-left: 20% ;background-color: #003379; hov: #00c0ef; color: #fff ">Cari</button>
                                     </span>
                                 </div>
 
@@ -454,7 +454,7 @@
                     <hr style="color:#E5E5E5"/>
                     <div class="row">
                         <div class="site-info col-md-6">
-                            <p class="text-muted">{!! Lang::get('lang.copyright') !!} &copy; {!! date('Y') !!}  <a href="{!! $company->website !!}" target="_blank">{!! $company->company_name !!}</a>. {!! Lang::get('lang.all_rights_reserved') !!}. {!! Lang::get('lang.powered_by') !!} <a href="https://www.faveohelpdesk.com/"  target="_blank">Faveo</a></p>
+                            <p class="text-muted">{!! Lang::get('lang.copyright') !!} &copy; 2023 - {!! date('Y') !!}  <a href="{!! $company->website !!}" target="_blank">{!! $company->company_name !!}</a>. {!! Lang::get('lang.all_rights_reserved') !!}. <br>SPBE Kominfos Kota Denpasar.</p>
                         </div>
                         <div class="site-social text-right col-md-6">
                             <?php $socials = App\Model\helpdesk\Theme\Widgets::all(); ?>
