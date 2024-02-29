@@ -13,6 +13,6 @@ return [
       |
      */
 
-    'previous' => '&laquo; zurück',
-    'next'     => 'weiter &raquo;',
+    'previous' => '&laquo; Previous',
+    'next'     => 'Next &raquo;',
 ];
