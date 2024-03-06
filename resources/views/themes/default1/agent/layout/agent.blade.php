@@ -187,6 +187,8 @@
 
                     @include('themes.default1.update.notification')
 
+                    <?php
+                    /*
                     <li class="nav-item dropdown notifications-menu" id="myDropdown">
 
                         <a href="#" class="nav-link" data-toggle="dropdown" onclick="myFunction()">
@@ -314,6 +316,8 @@
                             </ul>
                         </div>
                     </li>
+                    */
+                    ?>
 
                     <li class="nav-item dropdown">
 
