@@ -152,6 +152,8 @@
 
                     @include('themes.default1.update.notification')
 
+                    <?php
+                        /*
                     <li class="nav-item dropdown notifications-menu" id="myDropdown">
 
                         <a href="#" class="nav-link" data-toggle="dropdown" onclick="myFunction()">
@@ -160,7 +162,6 @@
 
                             <span class="badge badge-warning navbar-badge" id="count">{!! $notifications->count() !!}</span>
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
 
                             <div id="alert11" class="alert alert-success alert-dismissable" style="display:none;">
@@ -280,6 +281,8 @@
                             </ul>
                         </div>
                     </li>
+                    */
+                    ?>
 
                     <li class="nav-item dropdown">
 

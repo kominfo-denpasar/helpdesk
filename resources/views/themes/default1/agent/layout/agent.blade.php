@@ -5,7 +5,7 @@
     
         <meta charset="UTF-8" ng-app="myApp">
     
-        <title>Faveo | HELP DESK</title>
+        <title>Dashboard Agen | Portal Bantuan</title>
     
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     
