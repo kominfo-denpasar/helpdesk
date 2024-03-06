@@ -525,7 +525,7 @@ Route::middleware('web')->group(function () {
     Route::get('check_ticket/{id}', [Client\helpdesk\GuestController::class, 'get_ticket_email'])->name('check_ticket'); //detail ticket information
 
     // show ticket via have a ticket
-    Route::get('show-ticket/{id}/{code}', [Client\helpdesk\UnAuthController::class, 'showTicketCode'])->name('show.ticket'); //detail ticket information
+    Route::get('show-ticket/{id}/{token}', [Client\helpdesk\UnAuthController::class, 'showTicketCode'])->name('show.ticket'); //detail ticket information
 
     //testing ckeditor
     //===================================================================================
