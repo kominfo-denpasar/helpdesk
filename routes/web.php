@@ -297,6 +297,8 @@ Route::middleware('web')->group(function () {
       |
      */
     Route::middleware('install', 'update', 'auth', 'role.agent')->group(function () {
+        // Route::get('comment', [Agent\helpdesk\UserController::class, 'comment'])->name('comment');
+
         Route::post('chart-range/{date1}/{date2}', [Agent\helpdesk\DashboardController::class, 'ChartData'])->name('post.chart');
         Route::get('agen1', [Agent\helpdesk\DashboardController::class, 'ChartData']);
         Route::post('chart-range', [Agent\helpdesk\DashboardController::class, 'ChartData'])->name('post.chart');
@@ -318,7 +320,7 @@ Route::middleware('web')->group(function () {
         Route::get('organization-autofill', [Agent\helpdesk\OrganizationController::class, 'organizationAutofill'])->name('post.organization.autofill'); //auto fill organization name
         Route::get('org/delete/{id}', [Agent\helpdesk\OrganizationController::class, 'destroy'])->name('org.delete');
         Route::get('org-chart/{id}', [Agent\helpdesk\OrganizationController::class, 'orgChartData'])->name('org-chart-data');
-//    Route::post('org-chart-range', ['as' => 'post.org.chart', 'uses' => 'Agent\helpdesk\OrganizationController@orgChartData']);
+        // Route::post('org-chart-range', ['as' => 'post.org.chart', 'uses' => 'Agent\helpdesk\OrganizationController@orgChartData']);
         Route::post('org-chart-range/{id}/{date1}/{date2}', [Agent\helpdesk\OrganizationController::class, 'orgChartData'])->name('post.org.chart');
         Route::get('profile', [Agent\helpdesk\UserController::class, 'getProfile'])->name('profile'); /*  User profile get  */
 
@@ -383,12 +385,13 @@ Route::middleware('web')->group(function () {
         Route::get('/get-parent-tickets/{id}', [Agent\helpdesk\TicketController::class, 'getParentTickets'])->name('get.parent.ticket');
         Route::patch('/merge-tickets/{id}', [Agent\helpdesk\TicketController::class, 'mergeTickets'])->name('merge.tickets');
         //To get department tickets data
-//        //open tickets of department
-//        Route::get('/get-open-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getOpenTickets'])->name('get.dept.open');
-//        //close tickets of deartment
-//        Route::get('/get-closed-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getCloseTickets'])->name('get.dept.close');
-//        //in progress ticket of department
-//        Route::get('/get-under-process-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getInProcessTickets'])->name('get.dept.inprocess');
+        
+        // //open tickets of department
+        // Route::get('/get-open-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getOpenTickets'])->name('get.dept.open');
+        // //close tickets of deartment
+        // Route::get('/get-closed-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getCloseTickets'])->name('get.dept.close');
+        // //in progress ticket of department
+        // Route::get('/get-under-process-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getInProcessTickets'])->name('get.dept.inprocess');
 
         // route for graphical reporting
         Route::get('report', [Agent\helpdesk\ReportController::class, 'index'])->name('report.index'); /* To show dashboard pages */
@@ -404,14 +407,14 @@ Route::middleware('web')->group(function () {
         /*
          * Label
          */
-//        Route::get('labels-ticket', [Admin\helpdesk\Label\LabelController::class, 'attachTicket'])->name('labels.ticket');
-//        Route::get('json-labels', [Admin\helpdesk\Label\LabelController::class, 'getLabel'])->name('labels.json');
+        // Route::get('labels-ticket', [Admin\helpdesk\Label\LabelController::class, 'attachTicket'])->name('labels.ticket');
+        // Route::get('json-labels', [Admin\helpdesk\Label\LabelController::class, 'getLabel'])->name('labels.json');
 
         /*
          * Tags
          */
-//        Route::get('add-tag', [Agent\helpdesk\Filter\TagController::class, 'addToFilter'])->name('tag.add');
-//        Route::get('get-tag', [Agent\helpdesk\Filter\TagController::class, 'getTag'])->name('tag.get');
+        Route::get('add-tag', [Agent\helpdesk\Filter\TagController::class, 'addToFilter'])->name('tag.add');
+        Route::get('get-tag', [Agent\helpdesk\Filter\TagController::class, 'getTag'])->name('tag.get');
 
         Route::middleware('force.option', 'role.agent')->group(function () {
             Route::get('tickets', [Agent\helpdesk\TicketController::class, 'getTicketsView'])->name('tickets-view');

@@ -1090,4 +1090,17 @@ class UserController extends Controller
             echo "<option value='user_$user->id'>".$user->name().'</option>';
         }
     }
+
+
+     /**
+     * To Moderate the commenting.
+     *
+     * @param type Comment $comment
+     *
+     * @return Response
+     */
+    public function comment(Comment $comment)
+    {
+        return view('themes.default1.agent.kb.settings.comment');
+    }
 }
