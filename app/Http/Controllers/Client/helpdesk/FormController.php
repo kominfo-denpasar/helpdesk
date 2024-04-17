@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 // requests
 use App\Http\Requests\helpdesk\ClientRequest;
 // models
+use App\Model\kb\Category;
+
 use App\Model\helpdesk\Form\Fields;
 use App\Model\helpdesk\Manage\Help_topic;
 use App\Model\helpdesk\Settings\CommonSettings;
@@ -62,8 +64,10 @@ class FormController extends Controller
      *
      * @return type
      */
-    public function getForm(Help_topic $topic, CountryCode $code)
+    public function getForm(Help_topic $topic, CountryCode $code, Category $category)
     {
+        $categorys = $category->get();
+
         if (\Config::get('database.install') == '%0%') {
             return \Redirect::route('licence');
         }
@@ -85,7 +89,7 @@ class FormController extends Controller
 
             [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
 
-            return view('themes.default1.client.helpdesk.form', compact('topics', 'codes', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual'))->with('phonecode', $phonecode);
+            return view('themes.default1.client.helpdesk.form', compact('topics', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual'))->with('phonecode', $phonecode);
         } else {
             return \Redirect::route('home');
         }

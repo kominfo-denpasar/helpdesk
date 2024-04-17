@@ -53,10 +53,10 @@ $category_id = $all->pluck('category_id')->toArray();
 
             <div class="entry-meta text-muted">
 
-                <span class="date">
+                <!-- <span class="date">
                     <i class="far fa-clock fa-fw"></i> 
                     <time datetime="2013-09-19T20:01:58+00:00">{{$arti->created_at->format('l, d-m-Y')}}</time>
-                </span>
+                </span> -->
 
                 <span class="category">
                     <i class="fas fa-folder-open fa-fw"></i> 

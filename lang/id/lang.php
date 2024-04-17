@@ -1334,7 +1334,7 @@ return [
     'create'                                                                   => 'Buat',
     'dateformat'                                                               => 'Format Tanggal',
     'slug'                                                                     => 'Slug',
-    'read_more'                                                                => 'Baca Detail',
+    'read_more'                                                                => 'Lihat Persyaratan & Informasi',
     'view_all'                                                                 => 'Lihat Semua',
     'categories'                                                               => 'Kategori',
     'need_more_support'                                                        => 'Butuh bantuan lebih lanjut',

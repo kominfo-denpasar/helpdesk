@@ -26,15 +26,11 @@ class = "nav-item active"
 @stop
 <!-- /breadcrumbs -->
 @section('check')
-    
+{{--
     <div id="sidebar" class="site-sidebar col-md-3">
-
         <div id="form-border" class="comment-respond form-border" style="background : #fff">
-
             <section id="section-categories" class="section">
-        
                 <h2 class="section-title h4 clearfix">
-
                     <i class="line"></i>{!! Lang::get('lang.have_a_ticket') !!}?
                 </h2>
 
@@ -65,6 +61,53 @@ class = "nav-item active"
             </section>
         </div>
     </div><!-- #sidebar -->
+--}}
+
+
+<div id="sidebar" class="site-sidebar col-md-3">
+    <div id="form-border" class="comment-respond form-border" style="background : #fff">
+        <section id="section-categories" class="section">
+            <h2 class="section-title h4 clearfix">
+                <i class="line"></i> Informasi
+            </h2>
+            <div>
+                <p>Silahkan untuk menginputkan formulir sesuai dengan topik permohonan/permintaan Anda. Untuk melihat informasi dan penjelasan masing-masing layanan silahkan membuka halaman <a href="{{url('/knowledgebase')}}">Basis Pengetahuan</a>. Terima kasih.</p>
+            </div>
+
+        </section>
+
+        <section id="section-categories" class="section">
+
+            <h2 class="section-title h4 clearfix">
+
+                <b>   <i class="line" style="border-color: rgb(0, 154, 186);"></i>{!! Lang::get('lang.categories') !!}</b>
+                <small class="float-right"><i class="far fa-hdd fa-fw"></i></small>
+            </h2>
+
+            <ul class="nav nav-pills nav-stacked nav-categories">
+
+                @foreach($categorys as $category)
+                <?php
+                $num = \App\Model\kb\Relationship::where('category_id','=', $category->id)->get();
+                $article_id = $num->pluck('article_id');
+                $numcount = count($article_id);
+                ?>
+
+                <li class="d-flex justify-content-between align-items-center">
+
+                    <a href="{{url('category-list/'.$category->slug)}}" class="list-group-item list-group-item-action" style="padding: 5px;">
+
+                        <span class="badge badge-pill float-right" style="margin-top: 2px;">{{$numcount}}</span>
+
+                        {{$category->name}}
+                    </a>
+                </li>
+                    @endforeach
+            </ul>
+        </section>
+    </div>
+</div><!-- #sidebar -->
+
 @stop
 <!-- content -->
 @section('content')

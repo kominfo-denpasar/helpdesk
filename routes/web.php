@@ -709,7 +709,8 @@ Route::middleware('web')->group(function () {
     Route::post('show/rating2/{id}', [Client\helpdesk\UnAuthController::class, 'ratingReply'])->name('show.rating2'); /* Get reply Ratings */
     Route::get('show/change-status/{status}/{id}', [Client\helpdesk\UnAuthController::class, 'changeStatus'])->name('show.change.status'); /* Get reply Ratings */
     /* get the home page */
-    Route::get('knowledgebase', [Client\kb\UserController::class, 'home'])->name('home');
+    // Route::get('knowledgebase', [Client\kb\UserController::class, 'home'])->name('home');
+    Route::get('knowledgebase', [Client\kb\UserController::class, 'getCategoryList'])->name('home');
     /* get the faq value to user */
     // $router->get('faq',['as'=>'faq' , 'uses'=>'Client\kb\UserController@Faq'] );
     /* get the cantact page to user */
