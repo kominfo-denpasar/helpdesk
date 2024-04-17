@@ -38,6 +38,23 @@
 
 <div id="content" class="site-content col-md-12">
     <div id="corewidgetbox" class="wid">
+        
+        <div class="alert alert-primary">
+            <h5>Tentang Web Portal Bantuan/Helpdesk</h5>
+            Web Bantuan/Helpdesk Layanan adalah suatu fasilitas yang disediakan oleh Dinas Kominfos Kota Denpasar untuk memberikan bantuan teknis, solusi dan informasi terkait layanan kepada pengguna dari perangkat daerah maupun non perangkat daerah. Tujuan utama dari layanan helpdesk ini adalah untuk memberikan dukungan yang efisien dan berkualitas kepada pengguna, baik dalam mengatasi masalah teknis maupun memberikan panduan terkait produk atau layanan yang disediakan. 
+        </div>
+        <div class="alert alert-warning">
+            <h5>Catatan</h5>
+            <ul>
+                <li>Untuk gangguan atau kendala terhadap layanan seperti aplikasi silahkan mengirimkan tiket langsung dengan mengklik tombol kirim tiket dengan menyiapkan bukti dan kronologi dari kendala atau dapat mengirimkan melalui e-mail ke <b>support[at]denpasarkota.go.id</b></li>
+                <li>Untuk permohonan layanan dapat diajukan melalui halaman kirim tiket atau dapat mengakses halaman <b><a href="{{url('/knowledgebase')}}">list layanan</a></b> untuk melihat semua layanan yang disediakan sebelum melakukan permohonan.</li>
+                <li>Khusus untuk pengaduan/permintaan informasi terkait Pelayanan Publik Kota Denpasar, dapat disampaikan melalui aplikasi DPS (Denpasar Prama Sewaka) atau langsung melalui website <b><a href="https://pengaduan.denpasarkota.go.id">pengaduan.denpasarkota.go.id</a></b></li>
+            </ul> 
+        </div>
+        <hr>
+
+
+
         <div id="wbox" class="widgetrow text-center">
         @if(Auth::user())
         @else

@@ -132,8 +132,7 @@
                             </a>
                         </div>
 
-                        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin: 28px;float: right;">
 
                             <span class="navbar-toggler-icon"></span>
                         </button> <!-- collapse -->
@@ -315,9 +314,9 @@
                         <div class="form-border" style="z-index: 0;width: 85%;">
                             <div class="form-inline ">
                                 <div class="form-group input-group " style="width: 98% ">
-                                    <input type="text" name="s" class="search-field form-control" title="Enter search term" placeholder="Ada yang ingin ditanyakan? Ketik pencarian Anda di sini..." required="" style="width: 80%">
+                                    <input type="text" name="s" class="search-field form-control" title="Enter search term" placeholder="Ada yang ingin ditanyakan? Ketik pencarian Anda di sini..." required="" style="width: 80%;margin-bottom:10px;">
                                     <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-custom btn-md " style="margin-left: 20% ;background-color: #003379; hov: #00c0ef; color: #fff ">Cari</button>
+                                        <button type="submit" class="btn btn-custom btn-md " style="margin-bottom: 10px;background-color: #003379; hov: #00c0ef; color: #fff ">Cari</button>
                                     </span>
                                 </div>
 
