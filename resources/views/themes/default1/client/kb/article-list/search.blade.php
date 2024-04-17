@@ -23,27 +23,24 @@
     <div id="content" class="site-content col-md-9">
         @if ($result->isEmpty() || $result->every(function($arti) { return $arti->type == 0; }))
             <p>
-            <h3><b>Sorry!</b></h3> No results found.
+            <h3><b>Maaf!</b></h3> Tidak ada informasi yang ditemukan. Silahkan gunakan kata kunci lain atau pergi ke halaman <b><a href="{{ url('/knowledgebase') }}">list layanan</a></b>
             </p>
         @else
             @foreach($result as $arti)
                 @if ($arti->type != 0)
                     <article class="format-standard type-post hentry clearfix">
                         <header class="clearfix">
-                            <h3 class="post-title">
-                                <small><i class="fa fa-list-alt fa-2x fa-fw pull-left text-muted"></i></small>
+                            <h4 class="post-title">
+                                <small><i class="fa fa-list-alt fa-fw pull-left text-muted"></i></small>
                                 <a href="{{url('show/'.$arti->slug)}}">{{$arti->name}}</a>
-                            </h3>
+                            </h4>
                         </header>
-                            <?php $str = $arti->description ?>
-                            <?php $excerpt = App\Http\Controllers\Client\kb\UserController::getExcerpt($str, $startPos = 0, $maxLength = 200) ?>
-                        <blockquote class="archive-description">
-                            <p>{!! strip_tags($excerpt) !!} </p>
+                        <!-- <blockquote class="archive-description">
                             <a class="readmore-link" href="{{url('show/'.$arti->slug)}}">Read more</a>
-                        </blockquote>
-                        <div class="post-meta clearfix">
+                        </blockquote> -->
+                        <!-- <div class="post-meta clearfix">
                             <span class="date"><i class="fa fa-clock-o fa-fw"></i> {{$arti->created_at->format('l, d-m-Y')}}</span>
-                        </div><!-- end of post meta -->
+                        </div>end of post meta -->
                         <hr>
                     </article>
                 @endif

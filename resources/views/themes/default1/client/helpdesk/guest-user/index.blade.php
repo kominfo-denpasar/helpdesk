@@ -56,13 +56,16 @@
 
 
         <div id="wbox" class="widgetrow text-center">
+            <h4>
+                Pilih Menu
+            </h4>
         @if(Auth::user())
         @else
-            <span onclick="javascript: window.location.href='{{url('auth/register')}}';">
+            <!-- <span onclick="javascript: window.location.href='{{url('auth/register')}}';">
                 <a href="{{url('auth/register')}}" class="widgetrowitem defaultwidget" style="background-image: URL('lb-faveo/media/images/register.png');">
                     <span class="widgetitemtitle">{!! Lang::get('lang.register') !!}</span>
                 </a>
-            </span>
+            </span> -->
         @endif
         <?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();            
         ?>

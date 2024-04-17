@@ -27,7 +27,7 @@ Route::middleware('web')->group(function () {
     Route::middleware('install', 'update')->group(function () {
         \Illuminate\Support\Facades\Auth::routes();
         Route::post('login', [Auth\AuthController::class, 'postLogin'])->name('post.login');
-        Route::post('auth/register', [Auth\AuthController::class, 'postRegister'])->name('post.register');
+        // Route::post('auth/register', [Auth\AuthController::class, 'postRegister'])->name('post.register');
         Route::post('password/reset', [Auth\PasswordController::class, 'reset'])->name('post.reset');
         Route::get('auth/logout', [Auth\AuthController::class, 'getLogout'])->name('get.logout');
         Route::get('social/login/redirect/{provider}/{redirect?}', [Auth\AuthController::class, 'redirectToProvider'])->name('social.login');
@@ -50,12 +50,12 @@ Route::middleware('web')->group(function () {
     });
 
     // register page
-    Route::get('auth/register/{one?}/{two?}/{three?}/{four?}/{five?}', [Auth\AuthController::class, 'getRegister'])->name('auth.register');
-    Breadcrumbs::register('auth.register', function ($breadcrumbs) {
-        $breadcrumbs->parent('/');
-        $breadcrumbs->push('Login', url('auth/login'));
-        $breadcrumbs->push('Create Account', url('auth/register'));
-    });
+    // Route::get('auth/register/{one?}/{two?}/{three?}/{four?}/{five?}', [Auth\AuthController::class, 'getRegister'])->name('auth.register');
+    // Breadcrumbs::register('auth.register', function ($breadcrumbs) {
+    //     $breadcrumbs->parent('/');
+    //     $breadcrumbs->push('Login', url('auth/login'));
+    //     $breadcrumbs->push('Create Account', url('auth/register'));
+    // });
 
     // Auth login
     Route::get('auth/login/{one?}/{two?}/{three?}/{four?}/{five?}', [Auth\AuthController::class, 'getLogin'])->name('auth.login');

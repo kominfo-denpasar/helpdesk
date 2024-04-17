@@ -1,4 +1,4 @@
-@extends('themes.default1.client.layout.logclient')
+@extends('themes.default1.client.layout.client')
 
 @section('home')
     class = "nav-item active"
@@ -49,6 +49,7 @@
             
             <div id="wbox" class="widgetrow text-center">
                 
+                <!--                 
                 @if(Auth::user())
                 @else
                 <span onclick="javascript: window.location.href='{{url('auth/register')}}';">
@@ -57,6 +58,7 @@
                     </a>
                 </span>
                 @endif
+                 -->
                 <?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();            
                 ?>
                 @if($system != null) 
@@ -94,9 +96,9 @@
 
                     <div align="center">
 
-                        <h4 style="background-color: #0084b4;"> <a href="http://www.faveohelpdesk.com" class="logo">
+                        <!-- <h4 style="background-color: #0084b4;"> <a href="http://www.faveohelpdesk.com" class="logo">
                             <img src="{{ asset('lb-faveo/media/images/logo.png')}}" width="100px;"></a>
-                        </h4>
+                        </h4> -->
                     </div>
 
                     <div>
@@ -139,10 +141,10 @@
                                 <a href="{{url('password/email')}}">{!! Lang::get("lang.iforgot") !!}</a><br>
                             </div>
 
-                            <div class="col-sm-2">
+                            <!-- <div class="col-sm-2">
 
                                 <a href="{{url('auth/register')}}" class="text-center">{!! Lang::get("lang.register") !!}</a>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div>

@@ -12,7 +12,7 @@
         ?>
         <title> @yield('title') {!! strip_tags($title_name) !!} </title>
         <!-- faveo favicon -->
-        <link href="{{asset("lb-faveo/media/images/favicon.ico")}}"  rel="shortcut icon" >
+        <link href="{{asset("lb-faveo/media/images/favicon.png")}}"  rel="shortcut icon" >
 
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
@@ -295,12 +295,12 @@
                                         {!! Form::close() !!}
                                     </div>
 
-                                <div class="col-md-12 text-center">
+                                <!-- <div class="col-md-12 text-center">
                                      {{Lang::get('lang.or')}}
                                     <ul class="list-unstyled">
                                         <a href="{{url('auth/register')}}" style="font-size: 1.2em">{!! Lang::get('lang.create_account') !!}</a>
                                     </ul>
-                                </div>
+                                </div> -->
                                 </div>
                                     <div>
                                         @include('themes.default1.client.layout.social-login')
