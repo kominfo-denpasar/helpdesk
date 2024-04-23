@@ -55,6 +55,13 @@
     <body>
 
         <style>
+            h4.entry-title {
+                font-size: 16px !important;
+            }
+
+            .archive-description small .btn {
+                font-size: 12px !important;
+            }
 
            #dropdown_content{ padding-top: 1rem;margin: 0 !important;}
 
@@ -149,7 +156,11 @@
                                 </li>
                                 @endif
 
-                                <li @yield('kb') class="nav-item dropdown">
+                                <li @yield('submit') class="nav-item">
+                                    <a href="{{URL::route('article-list')}}" class="nav-link">{!! Lang::get('lang.articles') !!}</a>
+                                </li>
+
+                                <!-- <li @yield('kb') class="nav-item dropdown">
                                     <a href="{!! url('knowledgebase') !!}" class="dropdown-toggle nav-link"  id="navbarDropdown" role="button" data-toggle=""
                                         aria-haspopup="true" aria-expanded="false">{!! Lang::get('lang.knowledge_base') !!}
                                     </a>
@@ -157,7 +168,7 @@
                                         <li><a href="{{route('category-list')}}" class="dropdown-item">{!! Lang::get('lang.categories') !!}</a></li>
                                         <li><a href="{{route('article-list')}}" class="dropdown-item">{!! Lang::get('lang.articles') !!}</a></li>
                                     </ul>
-                                </li>
+                                </li> -->
 
                                  <?php $pages = App\Model\kb\Page::where('status', '1')->where('visibility', '1')->get();
                                 ?>

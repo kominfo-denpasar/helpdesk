@@ -33,7 +33,7 @@ class UserController extends Controller
      *
      * @return response
      */
-    public function getArticle(Article $article, Category $category, Settings $settings)
+    public function getArticle(Article $article, Category $category, Settings $settings, Relationship $relation)
     {
         $setting = $settings->first();
         $pagination = $setting->pagination;
@@ -45,6 +45,8 @@ class UserController extends Controller
         $article = $article->paginate($pagination);
 
         $article->setPath('article-list');
+
+        // list kategori
         $categorys = $category->get();
 
         return view('themes.default1.client.kb.article-list.articles', compact('categorys', 'article'));
@@ -315,6 +317,36 @@ class UserController extends Controller
         $articles_id = $page->pluck('article_id');
 
         return view('themes.default1.client.kb.article-list.categoryList', compact('categorys', 'articles_id'));
+    }
+
+    /**
+     * to show rule the seleted article.
+     *
+     * @return response
+     */
+    public function rule($slug, Article $article, Category $category)
+    {
+        //ArticleController::timezone();
+        $tz = \App\Model\helpdesk\Settings\System::where('id', '1')->first()->time_zone;
+        $tz = \App\Model\helpdesk\Utility\Timezones::where('id', $tz)->first()->name;
+        date_default_timezone_set($tz);
+        $date = \Carbon\Carbon::now()->toDateTimeString();
+        $arti = $article->where('slug', $slug);
+
+        if (!Auth::check() || \Auth::user()->role == 'user') {
+            $arti = $arti->where('status', '1');
+            $arti = $arti->where('publish_time', '<', $date);
+        }
+
+        $arti = $arti->where('type', '1');
+
+        $arti = $arti->first();
+
+        if ($arti) {
+            return view('themes.default1.client.kb.article-list.rule', compact('arti'));
+        } else {
+            return redirect('404');
+        }
     }
 
     // static function timezone($utc) {
