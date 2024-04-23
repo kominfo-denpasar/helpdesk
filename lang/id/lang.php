@@ -1315,6 +1315,7 @@ return [
     'comments-list'                                   => 'List of comments',
     'settings'                                        => 'Settings',
     'parent'                                          => 'Parent',
+    'link_form'                                       => 'Link Form',
     'description'                                     => 'Description',
     'enter_the_description'                           => 'Enter the description',
     'publish'                                         => 'Publish',

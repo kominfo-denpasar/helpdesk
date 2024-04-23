@@ -27,5 +27,5 @@ class Article extends BaseModel
     protected $table = 'kb_article';
 
     /* define the fillable field in the table */
-    protected $fillable = ['name', 'slug', 'description', 'type', 'status', 'publish_time'];
+    protected $fillable = ['name', 'slug', 'description', 'type', 'status', 'publish_time', 'link_form', 'rules'];
 }

@@ -1316,6 +1316,7 @@ return [
     'settings'                                        => 'Settings',
     'parent'                                          => 'Parent',
     'description'                                     => 'Description',
+    'link_form'                                       => 'Link Form',
     'enter_the_description'                           => 'Enter the description',
     'publish'                                         => 'Publish',
     'publish_immediately'                             => 'Publish immediately',
