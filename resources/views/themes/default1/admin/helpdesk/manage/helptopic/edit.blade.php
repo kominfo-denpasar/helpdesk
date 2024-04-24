@@ -82,6 +82,13 @@ class="nav-link active"
                     {!! Form::text('topic',null,['class' => 'form-control']) !!}
                 </div>
             </div>
+            <!-- Topic slug form Required -->
+            <div class="col-md-6">
+                <div class="form-group {{ $errors->has('slug') ? 'has-error' : '' }}">
+                    {!! Form::label('slug',Lang::get('lang.slug')) !!} <span class="text-red"> *</span>
+                    {!! Form::text('slug',null,['class' => 'form-control']) !!}
+                </div>
+            </div>
             <!-- status radio: required: Active|Dissable -->
             <div class="col-md-3">
                 <div class="form-group {{ $errors->has('ticket_status') ? 'has-error' : '' }}">

@@ -21,6 +21,8 @@ use DB;
 use Exception;
 use Lang;
 
+use Illuminate\Support\Str;
+
 /**
  * HelptopicController.
  *
@@ -116,8 +118,14 @@ class HelptopicController extends Controller
             } else {
                 $auto_assign = null;
             }
+
+            // ngebuat slug otomatis
+            $sl = $request->input('topic');
+            $slug = Str::slug($sl, '-');
+            $topic->slug = $slug;
+
             /* Check whether function success or not */
-            $topic->fill($request->except('custom_form', 'auto_assign'))->save();
+            $topic->fill($request->except('custom_form', 'auto_assign', 'slug'))->save();
             // $topics->fill($request->except('custom_form','auto_assign'))->save();
             /* redirect to Index page with Success Message */
             return redirect('helptopic')->with('success', Lang::get('lang.helptopic_created_successfully'));
