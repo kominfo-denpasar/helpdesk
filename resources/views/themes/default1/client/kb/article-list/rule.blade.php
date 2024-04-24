@@ -70,7 +70,7 @@ $category_id = $all->pluck('category_id')->toArray();
                 <small>
                     <a class="btn btn-sm btn-warning" href="{{url('article-list')}}"><i class="fa fa-angle-double-left"></i> &nbsp;{!! Lang::get('lang.back') !!}</a>
                     <a class="btn btn-sm btn-primary" href="{{url('show/'.$arti->slug)}}"><i class="fa fa-info-circle"></i> &nbsp;{!! Lang::get('lang.read_more') !!}</a>
-                    @if($arti->link_form!==null)
+                    @if($arti->link_form!=null)
                     <a class="btn btn-sm btn-danger" target="_BLANK" href="{{$arti->link_form}}"><i class="fa fa-link"></i> &nbsp;{!! Lang::get('lang.link_form') !!}</a>
                     @endif
                     <a class="btn btn-sm btn-info" href="{{url('create-ticket/'.$arti->slug)}}"><i class="fa fa-file"></i> &nbsp;{!! Lang::get('lang.submit_a_ticket') !!}</a>

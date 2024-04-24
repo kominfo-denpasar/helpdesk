@@ -69,10 +69,10 @@ $category_id = $all->pluck('category_id')->toArray();
             <blockquote class="blockquote archive-description" id="block" style="margin-bottom: 10px; margin-top: 10px;">
                 <small>
                     <a class="btn btn-sm btn-warning" href="{{url('article-list')}}"><i class="fa fa-angle-double-left"></i> &nbsp;{!! Lang::get('lang.back') !!}</a>
-                    @if($arti->rules!==null)
+                    @if($arti->rules!=null)
                     <a class="btn btn-sm btn-warning" href="{{url('rule/'.$arti->slug)}}"><i class="fa fa-edit"></i> &nbsp;{!! Lang::get('lang.rules') !!}</a>
                     @endif
-                    @if($arti->link_form!==null)
+                    @if($arti->link_form!=null)
                     <a class="btn btn-sm btn-danger" target="_BLANK" href="{{$arti->link_form}}"><i class="fa fa-link"></i> &nbsp;{!! Lang::get('lang.link_form') !!}</a>
                     @endif
                     <a class="btn btn-sm btn-info" href="{{url('create-ticket/'.$arti->slug)}}"><i class="fa fa-file"></i> &nbsp;{!! Lang::get('lang.submit_a_ticket') !!}</a>

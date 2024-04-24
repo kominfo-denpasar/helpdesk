@@ -123,7 +123,7 @@ class="nav-item menu-open"
                     </div>
 
                     <div class="col-md-12 form-group {{ $errors->has('link_form') ? 'has-error' : '' }}" >
-                        {!! Form::label('link_form',Lang::get('lang.link_form')) !!}<span class="text-red"> *</span>
+                        {!! Form::label('link_form',Lang::get('lang.link_form')) !!}
                         {!! Form::text('link_form',null,['class' => 'form-control']) !!}
                     </div>
                 </div>
