@@ -1,7 +1,7 @@
 @extends('themes.default1.client.layout.client')
 
 @section('title')
-    Pages List -
+    {{$page->name}} -
 @stop
 @section('breadcrumb')
     {{--<div class="site-hero clearfix">--}}
