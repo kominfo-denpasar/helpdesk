@@ -52,48 +52,70 @@
             </ul> 
         </div>
         <hr>
+	</div>
 
+    <script type="text/javascript"> $(function(){ $('.dialogerror, .dialoginfo, .dialogalert').fadeIn('slow');$("form").bind("submit", function(e){$(this).find("input:submit").attr("disabled", "disabled");});});</script>
+    <script type="text/javascript" >try {if (top.location.hostname != self.location.hostname) { throw 1; }} catch (e) { top.location.href = self.location.href; }</script>
+</div>
 
+	<?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();            
+	?>
+	@if($system != null) 
+		@if($system->status) 
+			@if($system->status == 1)
 
-        <div id="wbox" class="widgetrow text-center">
-            <h4>
-                Pilih Menu
-            </h4>
-        @if(Auth::user())
-        @else
-            <!-- <span onclick="javascript: window.location.href='{{url('auth/register')}}';">
-                <a href="{{url('auth/register')}}" class="widgetrowitem defaultwidget" style="background-image: URL('lb-faveo/media/images/register.png');">
-                    <span class="widgetitemtitle">{!! Lang::get('lang.register') !!}</span>
-                </a>
-            </span> -->
-        @endif
-        <?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();            
-        ?>
-        @if($system != null) 
-            @if($system->status) 
-                @if($system->status == 1)
-                    <span onclick="javascript: window.location.href='{!! URL::route('form') !!}';">
-                        <a href="{!! URL::route('form') !!}" class="widgetrowitem defaultwidget" style="background-image: URL('lb-faveo/media/images/submitticket.png');">
-                            <span class="widgetitemtitle">{!! Lang::get('lang.submit_a_ticket') !!}</span>
-                        </a>
-                    </span>
-                @endif
-            @endif
-        @endif
-            <span onclick="javascript: window.location.href='{{url('mytickets')}}';">
-                <a href="{{url('mytickets')}}" class="widgetrowitem defaultwidget" style="background-image: URL('lb-faveo/media/images/news.png');">
-                    <span class="widgetitemtitle">{!! Lang::get('lang.my_tickets') !!}</span>
-                </a>
-            </span>
-            <span onclick="javascript: window.location.href='{{url('/knowledgebase')}}';">
-                <a href="{{url('/knowledgebase')}}" class="widgetrowitem defaultwidget" style="background-image: URL('lb-faveo/media/images/knowledgebase.png');">
-                    <span class="widgetitemtitle">{!! Lang::get('lang.knowledge_base') !!}</span>
-                </a>
-            </span>
-        </div>
-    </div>
-<script type="text/javascript"> $(function(){ $('.dialogerror, .dialoginfo, .dialogalert').fadeIn('slow');$("form").bind("submit", function(e){$(this).find("input:submit").attr("disabled", "disabled");});});</script>
-<script type="text/javascript" >try {if (top.location.hostname != self.location.hostname) { throw 1; }} catch (e) { top.location.href = self.location.href; }</script>
-</div>   
-
+			<div class="col-md-4 py-4 d-flex align-items-start">
+				<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+					<span class="fa fa-2x fa-arrow-circle-right"></span>
+				</div>
+				<div>
+					<h2>Permohonan</h2>
+					<p>Ajukan pertanyaan atau permohonan, sebelum melakukan permohonan mohon untuk melihat panduan tahapan SOP serta syarat dan informasi pada masing-masing layanan yang tersedia.</p>
+					<a href="{!! URL::route('form') !!}" class="btn btn-primary">
+					{!! Lang::get('lang.submit_a_ticket') !!}
+					</a>
+				</div>
+			</div>
+			@endif
+		@endif
+	@endif
+	<div class="col-md-4 py-4 d-flex align-items-start">
+		<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+			<span class="fa fa-2x fa-arrow-circle-right"></span>
+		</div>
+		<div>
+			<h2>Layanan</h2>
+			<p>Kumpulan layanan yang tersedia pada paltform ini. Di halaman ini Anda dapat melihat informasi, syarat dan formulir yang dibutuhkan untuk mengajukan permohonan</p>
+			<a href="{{url('/knowledgebase')}}" class="btn btn-primary">
+			Lihat {!! Lang::get('lang.knowledge_base') !!}
+			</a>
+		</div>
+	</div>
+	<div class="col-md-4 py-4 d-flex align-items-start">
+		<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+			<span class="fa fa-2x fa-arrow-circle-right"></span>
+		</div>
+		<div>
+			<h2>F.A.Q</h2>
+			<p>Pertanyaan yang sering diajukan dan informasi umum lainnya. Baca terlebih dahulu pertanyaan-pertanyaan yang pernah diajukan sebelumnya, untuk menghindari pertanyaan yang berulang.</p>
+			<a href="{{url('pages/faq')}}" class="btn btn-primary">
+			Baca FAQ
+			</a>
+		</div>
+	</div>
+			
+	@if(Auth::user())
+	<div class="col-md-4 py-4 d-flex align-items-start">
+		<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+			<span class="fa fa-2x fa-arrow-circle-right"></span>
+		</div>
+		<div>
+			<h2>Tiket</h2>
+			<p>Riwayat Tiket yang pernah diajukan sebelumnya.</p>
+			<a href="{{url('mytickets')}}" class="btn btn-primary">
+			{!! Lang::get('lang.my_tickets') !!}
+			</a>
+		</div>
+	</div>
+	@endif
 @stop
