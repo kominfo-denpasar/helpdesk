@@ -1299,7 +1299,7 @@ return [
     'addarticle'                                      => 'Add article',
     'editarticle'                                     => 'Edit article',
     'allarticle'                                      => 'All articles',
-    'pages'                                           => 'Pages',
+    'pages'                                           => 'Halaman',
     'addpages'                                        => 'Add pages',
     'editpage'                                        => 'Edit page',
     'allpages'                                        => 'All pages',
@@ -1356,7 +1356,7 @@ return [
       |
      */
     'forget_password'                                                                  => 'forget password',
-    'article_list'                                                                     => 'List Artikel',
+    'article_list'                                                                     => 'List Layanan',
     'home'                                                                             => 'Beranda',
     'submit_a_ticket'                                                                  => 'Buat Permohonan',
     'my_profile'                                                                       => 'Profil Saya',
@@ -1492,7 +1492,7 @@ return [
      * -----------------------------------------------------------------------------------
      */
     'ticket_priority'                                           => 'Ticket priority',
-    'priority'                                                  => 'Priority',
+    'priority'                                                  => 'Prioritas',
     'priority_desc'                                             => 'Priority description',
     'priority_urgency'                                          => 'Priority urgency',
     'priority_id'                                               => 'Priority Id',

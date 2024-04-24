@@ -522,7 +522,8 @@ Route::middleware('web')->group(function () {
     Route::get('/', [Client\helpdesk\WelcomepageController::class, 'index'])->name('/');
 
     Route::get('create-ticket', [Client\helpdesk\FormController::class, 'getForm'])->name('form'); //getform
-    // Route::get('create-ticket/{id}', [Client\helpdesk\FormController::class, 'getFormCat'])->name('form-cat'); //getformcat
+    Route::get('create-ticket/{id}', [Client\helpdesk\FormController::class, 'getFormCat'])->name('form-cat'); //getformcat
+    
     Route::get('mytickets/{id}', [Client\helpdesk\GuestController::class, 'singleThread'])->name('ticketinfo'); //detail ticket information
     Route::post('checkmyticket', [Client\helpdesk\UnAuthController::class, 'PostCheckTicket']); //ticket ckeck
 

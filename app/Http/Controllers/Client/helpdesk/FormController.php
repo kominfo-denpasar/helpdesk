@@ -96,6 +96,48 @@ class FormController extends Controller
     }
 
     /**
+     * getformCat.
+     *
+     * @param type Help_topic $topic
+     *
+     * @return type
+     */
+    public function getFormCat($cat, Help_topic $topic, CountryCode $code, Category $category)
+    {
+        $topicnya = Help_topic::where('slug', '=', $cat)->first();
+        if($topicnya===null){
+            return \Redirect::route('error404');
+        }
+        $categorys = $category->get();
+
+        if (\Config::get('database.install') == '%0%') {
+            return \Redirect::route('licence');
+        }
+        $settings = CommonSettings::select('status')->where('option_name', '=', 'send_otp')->first();
+        $email_mandatory = CommonSettings::select('status')->where('option_name', '=', 'email_mandatory')->first();
+        if (!\Auth::check() && ($settings->status == 1 || $settings->status == '1')) {
+            return redirect('auth/login')->with(['login_require' => 'Please login to your account for submitting a ticket', 'referer' => 'form']);
+        }
+        $location = GeoIP::getLocation();
+        $phonecode = $code->where('iso', '=', $location->iso_code)->first();
+        if (System::first()->status == 1) {
+            $topics = $topic->get();
+            $codes = $code->get();
+            if ($phonecode->phonecode) {
+                $phonecode = $phonecode->phonecode;
+            } else {
+                $phonecode = '';
+            }
+
+            [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
+
+            return view('themes.default1.client.helpdesk.form-cat', compact('topics', 'topicnya', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual'))->with('phonecode', $phonecode);
+        } else {
+            return \Redirect::route('home');
+        }
+    }
+
+    /**
      * This Function to post the form for the ticket.
      *
      * @param type Form_name    $name

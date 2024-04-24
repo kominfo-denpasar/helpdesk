@@ -156,7 +156,7 @@
                                 </li>
                                 @endif
 
-                                <li @yield('submit') class="nav-item">
+                                <li @yield('kb') class="nav-item">
                                     <a href="{{URL::route('article-list')}}" class="nav-link">{!! Lang::get('lang.articles') !!}</a>
                                 </li>
 
