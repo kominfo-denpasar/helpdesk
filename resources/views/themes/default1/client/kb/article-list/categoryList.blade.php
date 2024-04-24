@@ -1,7 +1,7 @@
 @extends('themes.default1.client.layout.client')
 
 @section('title')
-Category List -
+Kategori Layanan -
 @stop
 
 @section('kb')

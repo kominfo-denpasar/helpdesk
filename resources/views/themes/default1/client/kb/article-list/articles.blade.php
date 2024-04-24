@@ -1,7 +1,7 @@
 @extends('themes.default1.client.layout.client')
 
 @section('title')
-    Article List -
+    Layanan -
 @stop
 
 @section('kb')
