@@ -31,6 +31,8 @@ use Illuminate\Http\Request;
 use Lang;
 use Redirect;
 
+use Illuminate\Support\Facades\Http;
+
 /**
  * FormController.
  *
@@ -66,6 +68,15 @@ class FormController extends Controller
      */
     public function getForm(Help_topic $topic, CountryCode $code, Category $category)
     {
+        // get data perangkat daerah from external
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+        $apiURL = 'https://dummyjson.com/products';
+        $response = Http::withHeaders($headers)->get($apiURL);
+        $opd = $response->json();
+        // ----
+        
         $categorys = $category->get();
 
         if (\Config::get('database.install') == '%0%') {
@@ -89,7 +100,7 @@ class FormController extends Controller
 
             [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
 
-            return view('themes.default1.client.helpdesk.form', compact('topics', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual'))->with('phonecode', $phonecode);
+            return view('themes.default1.client.helpdesk.form', compact('topics', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'))->with('phonecode', $phonecode);
         } else {
             return \Redirect::route('home');
         }
@@ -104,6 +115,15 @@ class FormController extends Controller
      */
     public function getFormCat($cat, Help_topic $topic, CountryCode $code, Category $category)
     {
+        // get data perangkat daerah from external
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+        $apiURL = 'https://dummyjson.com/products';
+        $response = Http::withHeaders($headers)->get($apiURL);
+        $opd = $response->json();
+        // ----
+        
         $topicnya = Help_topic::where('slug', '=', $cat)->first();
         if($topicnya===null){
             return \Redirect::route('error404');
@@ -131,7 +151,7 @@ class FormController extends Controller
 
             [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
 
-            return view('themes.default1.client.helpdesk.form-cat', compact('topics', 'topicnya', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual'))->with('phonecode', $phonecode);
+            return view('themes.default1.client.helpdesk.form-cat', compact('topics', 'topicnya', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'))->with('phonecode', $phonecode);
         } else {
             return \Redirect::route('home');
         }
@@ -200,7 +220,9 @@ class FormController extends Controller
     public function postedForm(User $user, ClientRequest $request, Ticket $ticket_settings, Ticket_source $ticket_source, Ticket_attachments $ta, CountryCode $code)
     {
         try {
-            $form_extras = $request->except('Name', 'Phone', 'Email', 'Subject', 'Details', 'helptopic', '_wysihtml5_mode', '_token', 'mobile', 'Code', 'priority', 'attachment');
+            $form_extras = $request->except('Name', 'Phone', 'Email', 'Subject', 'Details', 'helptopic', '_wysihtml5_mode', '_token', 'mobile', 'Code', 'priority', 'attachment', 'kat_pemohon');
+            $kat_pemohon = $request->input('kat_pemohon');
+
             $name = $request->input('Name');
             $phone = $request->input('Phone');
             if ($request->input('Email')) {
@@ -276,7 +298,7 @@ class FormController extends Controller
                 }
             }
             event(new \App\Events\ClientTicketFormPost($form_extras, $email, $source));
-            $result = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $auto_response);
+            $result = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $kat_pemohon, $auto_response);
             // dd($result);
             if ($result[1] == 1) {
                 $ticketId = Tickets::where('ticket_number', '=', $result[0])->first();

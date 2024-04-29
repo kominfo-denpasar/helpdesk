@@ -1491,6 +1491,7 @@ return [
      * -----------------------------------------------------------------------------------
      */
     'ticket_priority'                                           => 'Ticket priority',
+    'kat_pemohon'                                               => 'User Category',
     'priority'                                                  => 'Priority',
     'priority_desc'                                             => 'Priority description',
     'priority_urgency'                                          => 'Priority urgency',

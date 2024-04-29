@@ -1492,6 +1492,7 @@ return [
      * -----------------------------------------------------------------------------------
      */
     'ticket_priority'                                           => 'Ticket priority',
+    'kat_pemohon'                                               => 'Kategori Pemohon',
     'priority'                                                  => 'Prioritas',
     'priority_desc'                                             => 'Priority description',
     'priority_urgency'                                          => 'Priority urgency',

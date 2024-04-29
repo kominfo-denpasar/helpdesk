@@ -157,7 +157,7 @@
                                 @endif
 
                                 <li @yield('kb') class="nav-item">
-                                    <a href="{{URL::route('article-list')}}" class="nav-link">{!! Lang::get('lang.articles') !!}</a>
+                                    <a href="{{URL::route('home')}}" class="nav-link">{!! Lang::get('lang.knowledge_base') !!}</a>
                                 </li>
 
                                 <!-- <li @yield('kb') class="nav-item dropdown">

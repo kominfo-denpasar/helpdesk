@@ -248,6 +248,28 @@ class = "nav-item active"
                         @endif
                         @endif
                         @endif
+                        <!-- kategori pemohon -->
+                        <div class="col-md-12 form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>{!! Lang::get('lang.kat_pemohon') !!}<span class="text-red"> *</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <?php
+                                    // $helptopic = App\Model\helpdesk\Manage\Help_topic::where('status', '=', 1)->get();
+                                    ?><!---->
+                                    <select autocomplete="off" name="kat_pemohon" class="form-control" id="selectid">
+                                        <option value="0" selected>Eksternal</option>
+                                        @foreach($opd['products'] as $opdnya)
+                                        <option value="{{ $opdnya['id'] }}">{{ $opdnya['title'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- --------------- -->
+
                         <div class="col-md-12 form-group {{ $errors->has('Subject') ? 'has-error' : '' }}">
                             {!! Form::label('Subject',Lang::get('lang.subject')) !!}<span class="text-red"> *</span>
                             {!! Form::text('Subject',null,['class' => 'form-control']) !!}

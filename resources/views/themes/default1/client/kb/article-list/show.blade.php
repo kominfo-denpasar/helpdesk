@@ -98,7 +98,8 @@ $category_id = $all->pluck('category_id')->toArray();
         ->get();
 
 ?>
-
+<?php
+/*
     <div id="comments" class="comments-area">
         @foreach($comments as $comment)
         <ol class="comment-list">
@@ -313,12 +314,11 @@ $category_id = $all->pluck('category_id')->toArray();
                 @endif
             </div><!-- #respond -->
             {!! Form::close() !!}
+*/
+?>
 
-
-
-    </div>
-            @stop
-
+</div>
+@stop
 @section('category')
 
     <div id="sidebar" class="site-sidebar col-md-3">
