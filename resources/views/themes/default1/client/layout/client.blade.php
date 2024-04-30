@@ -256,7 +256,7 @@
 
               {{-- PRO Denpasar --}}
               <li class="nav-item">
-                <a href="https://pengaduan.denpasarkota.go.id/" target="_blank" class="nav-link">PRO Denpasar</a>
+                <a href="https://pengaduan.denpasarkota.go.id/" class="nav-link">PRO Denpasar</a>
               </li>
 
               @if (Auth::user())
