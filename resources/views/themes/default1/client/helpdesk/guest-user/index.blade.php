@@ -1,121 +1,147 @@
 @extends('themes.default1.client.layout.client')
 
 @section('home')
-    class = "nav-item active"
+  class = "nav-item active"
 @stop
 
 @section('HeadInclude')
-<link href="{{asset("lb-faveo/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css")}}" rel="stylesheet" type="text/css" />
-           <link href="{{asset("lb-faveo/css/widgetbox.css")}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset("lb-faveo/plugins/iCheck/flat/blue.css")}}" rel="stylesheet" type="text/css" />
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        {{-- <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> --}}
-        <link href="{{asset("lb-faveo/css/jquerysctipttop.css")}}" rel="stylesheet" type="text/css">
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <link href="{{ asset('lb-faveo/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet"
+    type="text/css" />
+  <link href="{{ asset('lb-faveo/css/widgetbox.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('lb-faveo/plugins/iCheck/flat/blue.css') }}" rel="stylesheet" type="text/css" />
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  {{-- <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> --}}
+  <link href="{{ asset('lb-faveo/css/jquerysctipttop.css') }}" rel="stylesheet" type="text/css">
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 @stop
 @section('breadcrumb')
-{{--    <div class="site-hero clearfix">--}}
-        <ol class="breadcrumb float-sm-right ">
-            <li class="breadcrumb-item"> <i class="fas fa-home"> </i> {!! Lang::get('lang.you_are_here') !!} : &nbsp;</li>
+  {{--    <div class="site-hero clearfix"> --}}
+  <ol class="breadcrumb float-sm-right ">
+    <li class="breadcrumb-item"> <i class="fas fa-home"> </i> {!! Lang::get('lang.you_are_here') !!} : &nbsp;</li>
 
-            <li><a href="{!! URL::route('/') !!}">{!! Lang::get('lang.home') !!}</a></li>
-        </ol>
-{{--    </div>--}}
+    <li><a href="{!! URL::route('/') !!}">{!! Lang::get('lang.home') !!}</a></li>
+  </ol>
+  {{--    </div> --}}
 @stop
 @section('content')
-@if(!Session::has('error') && count($errors)>0)
+  @if (!Session::has('error') && count($errors) > 0)
     <div class="alert alert-danger alert-dismissable">
-        <i class="fa fa-ban"></i>
-        <b>{!! Lang::get('lang.alert') !!} !</b>
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+      <i class="fa fa-ban"></i>
+      <b>{!! Lang::get('lang.alert') !!} !</b>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
     </div>
-    @endif
+  @endif
 
-<div id="content" class="site-content col-md-12">
+  <div id="content" class="site-content col-md-12">
     <div id="corewidgetbox" class="wid">
-        
-        <div class="alert alert-primary">
-            <h5>Tentang Web Portal Bantuan/Helpdesk</h5>
-            Web Bantuan/Helpdesk Layanan adalah suatu fasilitas yang disediakan oleh Dinas Kominfos Kota Denpasar untuk memberikan bantuan teknis, solusi dan informasi terkait layanan kepada pengguna dari perangkat daerah maupun non perangkat daerah. Tujuan utama dari layanan helpdesk ini adalah untuk memberikan dukungan yang efisien dan berkualitas kepada pengguna, baik dalam mengatasi masalah teknis maupun memberikan panduan terkait produk atau layanan yang disediakan. 
+
+      <div class="alert alert-primary">
+        <h5>Tentang Web Standar Pelayanan Publik</h5>
+        Web SPP (Standar Pelayanan Publik) Pemerintah Kota Denpasar memberikan informasi dan permohonan layanan SPP secara
+        online sehingga lebih efisien dan berkualitas bagi pengguna, baik dalam mengatasi masalah teknis maupun memberikan
+        panduan terkait produk dan layanan yang disediakan.
+      </div>
+      <div class="alert alert-warning">
+        <h5>Catatan</h5>
+        <ul>
+          <li>Untuk gangguan atau kendala terhadap layanan seperti aplikasi silahkan mengirimkan tiket langsung dengan
+            mengklik tombol kirim tiket dengan menyiapkan bukti dan kronologi dari kendala atau dapat mengirimkan melalui
+            e-mail ke <b>support[at]denpasarkota.go.id</b></li>
+          <li>Untuk permohonan layanan dapat diajukan melalui halaman kirim tiket atau dapat mengakses halaman <b><a
+                href="{{ url('/knowledgebase') }}">list layanan</a></b> untuk melihat semua layanan yang disediakan
+            sebelum melakukan permohonan.</li>
+          <li>Khusus untuk pengaduan/permintaan informasi terkait Pelayanan Publik Kota Denpasar, dapat disampaikan
+            melalui aplikasi DPS (Denpasar Prama Sewaka) atau langsung melalui website <b><a
+                href="https://pengaduan.denpasarkota.go.id">pengaduan.denpasarkota.go.id</a></b></li>
+        </ul>
+      </div>
+      <hr>
+    </div>
+
+    <script type="text/javascript">
+      $(function() {
+        $('.dialogerror, .dialoginfo, .dialogalert').fadeIn('slow');
+        $("form").bind("submit", function(e) {
+          $(this).find("input:submit").attr("disabled", "disabled");
+        });
+      });
+    </script>
+    <script type="text/javascript">
+      try {
+        if (top.location.hostname != self.location.hostname) {
+          throw 1;
+        }
+      } catch (e) {
+        top.location.href = self.location.href;
+      }
+    </script>
+  </div>
+
+  <?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
+  ?>
+  <div class="col-md-4 py-4 d-flex align-items-start">
+    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+      <span class="fa fa-2x fa-arrow-circle-right"></span>
+    </div>
+    <div>
+      <h2>Layanan</h2>
+      <p>Kumpulan layanan yang tersedia pada paltform ini. Halaman ini Anda dapat melihat informasi, syarat dan
+        formulir yang dibutuhkan untuk mengajukan permohonan</p>
+      <a href="{{ url('/article-list') }}" class="btn btn-primary">
+        Lihat {!! Lang::get('lang.knowledge_base') !!}
+      </a>
+    </div>
+  </div>
+  @if ($system != null)
+    @if ($system->status)
+      @if ($system->status == 1)
+        <div class="col-md-4 py-4 d-flex align-items-start">
+          <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+            <span class="fa fa-2x fa-arrow-circle-right"></span>
+          </div>
+          <div>
+            <h2>Permohonan</h2>
+            <p>Ajukan pertanyaan atau permohonan, sebelum melakukan permohonan mohon untuk melihat panduan tahapan SOP
+              serta syarat dan informasi pada masing-masing layanan yang tersedia.</p>
+            <a href="{!! URL::route('form') !!}" class="btn btn-primary">
+              {!! Lang::get('lang.submit_a_ticket') !!}
+            </a>
+          </div>
         </div>
-        <div class="alert alert-warning">
-            <h5>Catatan</h5>
-            <ul>
-                <li>Untuk gangguan atau kendala terhadap layanan seperti aplikasi silahkan mengirimkan tiket langsung dengan mengklik tombol kirim tiket dengan menyiapkan bukti dan kronologi dari kendala atau dapat mengirimkan melalui e-mail ke <b>support[at]denpasarkota.go.id</b></li>
-                <li>Untuk permohonan layanan dapat diajukan melalui halaman kirim tiket atau dapat mengakses halaman <b><a href="{{url('/knowledgebase')}}">list layanan</a></b> untuk melihat semua layanan yang disediakan sebelum melakukan permohonan.</li>
-                <li>Khusus untuk pengaduan/permintaan informasi terkait Pelayanan Publik Kota Denpasar, dapat disampaikan melalui aplikasi DPS (Denpasar Prama Sewaka) atau langsung melalui website <b><a href="https://pengaduan.denpasarkota.go.id">pengaduan.denpasarkota.go.id</a></b></li>
-            </ul> 
-        </div>
-        <hr>
-	</div>
+      @endif
+    @endif
+  @endif
+  <div class="col-md-4 py-4 d-flex align-items-start">
+    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+      <span class="fa fa-2x fa-arrow-circle-right"></span>
+    </div>
+    <div>
+      <h2>F.A.Q</h2>
+      <p>Pertanyaan yang sering diajukan dan informasi umum lainnya. Baca terlebih dahulu pertanyaan-pertanyaan yang
+        pernah diajukan sebelumnya, untuk menghindari pertanyaan yang berulang.</p>
+      <a href="{{ url('pages/faq') }}" class="btn btn-primary">
+        Baca FAQ
+      </a>
+    </div>
+  </div>
 
-    <script type="text/javascript"> $(function(){ $('.dialogerror, .dialoginfo, .dialogalert').fadeIn('slow');$("form").bind("submit", function(e){$(this).find("input:submit").attr("disabled", "disabled");});});</script>
-    <script type="text/javascript" >try {if (top.location.hostname != self.location.hostname) { throw 1; }} catch (e) { top.location.href = self.location.href; }</script>
-</div>
-
-	<?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();            
-	?>
-	@if($system != null) 
-		@if($system->status) 
-			@if($system->status == 1)
-
-			<div class="col-md-4 py-4 d-flex align-items-start">
-				<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-					<span class="fa fa-2x fa-arrow-circle-right"></span>
-				</div>
-				<div>
-					<h2>Permohonan</h2>
-					<p>Ajukan pertanyaan atau permohonan, sebelum melakukan permohonan mohon untuk melihat panduan tahapan SOP serta syarat dan informasi pada masing-masing layanan yang tersedia.</p>
-					<a href="{!! URL::route('form') !!}" class="btn btn-primary">
-					{!! Lang::get('lang.submit_a_ticket') !!}
-					</a>
-				</div>
-			</div>
-			@endif
-		@endif
-	@endif
-	<div class="col-md-4 py-4 d-flex align-items-start">
-		<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-			<span class="fa fa-2x fa-arrow-circle-right"></span>
-		</div>
-		<div>
-			<h2>Layanan</h2>
-			<p>Kumpulan layanan yang tersedia pada paltform ini. Di halaman ini Anda dapat melihat informasi, syarat dan formulir yang dibutuhkan untuk mengajukan permohonan</p>
-			<a href="{{url('/article-list')}}" class="btn btn-primary">
-			Lihat {!! Lang::get('lang.knowledge_base') !!}
-			</a>
-		</div>
-	</div>
-	<div class="col-md-4 py-4 d-flex align-items-start">
-		<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-			<span class="fa fa-2x fa-arrow-circle-right"></span>
-		</div>
-		<div>
-			<h2>F.A.Q</h2>
-			<p>Pertanyaan yang sering diajukan dan informasi umum lainnya. Baca terlebih dahulu pertanyaan-pertanyaan yang pernah diajukan sebelumnya, untuk menghindari pertanyaan yang berulang.</p>
-			<a href="{{url('pages/faq')}}" class="btn btn-primary">
-			Baca FAQ
-			</a>
-		</div>
-	</div>
-			
-	@if(Auth::user())
-	<div class="col-md-4 py-4 d-flex align-items-start">
-		<div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-			<span class="fa fa-2x fa-arrow-circle-right"></span>
-		</div>
-		<div>
-			<h2>Tiket</h2>
-			<p>Riwayat Tiket yang pernah diajukan sebelumnya.</p>
-			<a href="{{url('mytickets')}}" class="btn btn-primary">
-			{!! Lang::get('lang.my_tickets') !!}
-			</a>
-		</div>
-	</div>
-	@endif
+  @if (Auth::user())
+    <div class="col-md-4 py-4 d-flex align-items-start">
+      <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+        <span class="fa fa-2x fa-arrow-circle-right"></span>
+      </div>
+      <div>
+        <h2>Tiket</h2>
+        <p>Riwayat Tiket yang pernah diajukan sebelumnya.</p>
+        <a href="{{ url('mytickets') }}" class="btn btn-primary">
+          {!! Lang::get('lang.my_tickets') !!}
+        </a>
+      </div>
+    </div>
+  @endif
 @stop
