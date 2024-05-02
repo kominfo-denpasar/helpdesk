@@ -323,7 +323,7 @@
                   </li>
                 @endif
               @endif
-              <li class="nav-item dropdown">
+              {{-- <li class="nav-item dropdown">
                 <?php $src = Lang::getLocale() . '.png'; ?>
                 <a href="#" class="dropdown-toggle nav-link" id="navbarDropdown" role="button"
                   data-toggle="" aria-haspopup="true" aria-expanded="false">
@@ -343,7 +343,7 @@
                       </a></li>
                   @endforeach
                 </ul>
-              </li>
+              </li> --}}
             </ul>
             {{--                            <span class="switcher-toggle desk_none" onclick="myFunction()"> --}}
             {{--                          <span class="icon"></span> --}}
