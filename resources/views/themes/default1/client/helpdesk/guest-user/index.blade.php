@@ -46,7 +46,7 @@
         online sehingga lebih efisien dan berkualitas bagi pengguna, baik dalam mengatasi masalah teknis maupun memberikan
         panduan terkait produk dan layanan yang disediakan.
       </div>
-      <div class="alert alert-warning">
+      {{-- <div class="alert alert-warning">
         <h5>Catatan</h5>
         <ul>
           <li>Untuk gangguan atau kendala terhadap layanan seperti aplikasi silahkan mengirimkan tiket langsung dengan
@@ -59,7 +59,7 @@
             melalui aplikasi DPS (Denpasar Prama Sewaka) atau langsung melalui website <b><a
                 href="https://pengaduan.denpasarkota.go.id">pengaduan.denpasarkota.go.id</a></b></li>
         </ul>
-      </div>
+      </div> --}}
       <hr>
     </div>
 
