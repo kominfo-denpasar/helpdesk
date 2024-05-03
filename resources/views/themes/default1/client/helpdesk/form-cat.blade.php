@@ -303,6 +303,7 @@ class = "nav-item active"
 -->
 <script type="text/javascript">
 $(document).ready(function(){
+   /*
    var helpTopic = $("#selectid").val();
    send(helpTopic);
    $("#selectid").on("change",function(){
@@ -323,6 +324,7 @@ $(document).ready(function(){
            }
        });
    }
+   */
 });
 
 $(function() {
