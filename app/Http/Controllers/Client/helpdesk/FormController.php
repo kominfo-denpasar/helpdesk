@@ -116,12 +116,12 @@ class FormController extends Controller
     public function getFormCat($cat, Help_topic $topic, CountryCode $code, Category $category)
     {
         // get data perangkat daerah from external
-        // $headers = [
-        //     'Content-Type' => 'application/json'
-        // ];
-        // $apiURL = 'https://dummyjson.com/products';
-        // $response = Http::withHeaders($headers)->get($apiURL);
-        // $opd = $response->json();
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+        $apiURL = 'https://dummyjson.com/products';
+        $response = Http::withHeaders($headers)->get($apiURL);
+        $opd = $response->json();
         // ----
         
         $topicnya = Help_topic::where('slug', '=', $cat)->first();
