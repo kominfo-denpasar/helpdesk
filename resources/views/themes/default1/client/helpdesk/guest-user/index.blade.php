@@ -42,7 +42,8 @@
 
       <div class="alert alert-primary">
         <h5>Tentang Web Standar Pelayanan Publik</h5>
-        Web SPP (Standar Pelayanan Publik) Pemerintah Kota Denpasar memberikan informasi dan permohonan layanan SPP secara
+        Web SPP (Standar Pelayanan Publik) Dinas Komunikasi, Informatika dan Statistik Kota Denpasar memberikan informasi
+        dan permohonan layanan SPP secara
         online sehingga lebih efisien dan berkualitas bagi pengguna, baik dalam mengatasi masalah teknis maupun memberikan
         panduan terkait produk dan layanan yang disediakan.
       </div>

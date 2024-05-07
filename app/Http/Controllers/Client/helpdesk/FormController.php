@@ -79,28 +79,28 @@ class FormController extends Controller
         
         $categorys = $category->get();
 
-        if (\Config::get('database.install') == '%0%') {
-            return \Redirect::route('licence');
-        }
+        // if (\Config::get('database.install') == '%0%') {
+        //     return \Redirect::route('licence');
+        // }
         $settings = CommonSettings::select('status')->where('option_name', '=', 'send_otp')->first();
         $email_mandatory = CommonSettings::select('status')->where('option_name', '=', 'email_mandatory')->first();
         if (!\Auth::check() && ($settings->status == 1 || $settings->status == '1')) {
             return redirect('auth/login')->with(['login_require' => 'Please login to your account for submitting a ticket', 'referer' => 'form']);
         }
-        $location = GeoIP::getLocation();
-        $phonecode = $code->where('iso', '=', $location->iso_code)->first();
+        // $location = GeoIP::getLocation();
+        // $phonecode = $code->where('iso', '=', $location->iso_code)->first();
         if (System::first()->status == 1) {
             $topics = $topic->get();
-            $codes = $code->get();
-            if ($phonecode->phonecode) {
-                $phonecode = $phonecode->phonecode;
-            } else {
-                $phonecode = '';
-            }
+            // $codes = $code->get();
+            // if ($phonecode->phonecode) {
+            //     $phonecode = $phonecode->phonecode;
+            // } else {
+            //     $phonecode = '';
+            // }
 
             [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
 
-            return view('themes.default1.client.helpdesk.form', compact('topics', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'))->with('phonecode', $phonecode);
+            return view('themes.default1.client.helpdesk.form', compact('topics', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'));
         } else {
             return \Redirect::route('home');
         }
@@ -138,20 +138,20 @@ class FormController extends Controller
         if (!\Auth::check() && ($settings->status == 1 || $settings->status == '1')) {
             return redirect('auth/login')->with(['login_require' => 'Please login to your account for submitting a ticket', 'referer' => 'form']);
         }
-        $location = GeoIP::getLocation();
-        $phonecode = $code->where('iso', '=', $location->iso_code)->first();
+        // $location = GeoIP::getLocation();
+        // $phonecode = $code->where('iso', '=', $location->iso_code)->first();
         if (System::first()->status == 1) {
             $topics = $topic->get();
-            $codes = $code->get();
-            if ($phonecode->phonecode) {
-                $phonecode = $phonecode->phonecode;
-            } else {
-                $phonecode = '';
-            }
+            // $codes = $code->get();
+            // if ($phonecode->phonecode) {
+            //     $phonecode = $phonecode->phonecode;
+            // } else {
+            //     $phonecode = '';
+            // }
 
             [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
 
-            return view('themes.default1.client.helpdesk.form-cat', compact('topics', 'topicnya', 'codes', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'))->with('phonecode', $phonecode);
+            return view('themes.default1.client.helpdesk.form-cat', compact('topics', 'topicnya', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'));
         } else {
             return \Redirect::route('home');
         }

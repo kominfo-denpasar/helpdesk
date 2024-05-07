@@ -188,21 +188,9 @@ class = "nav-item active"
 
                         @if(!Auth::user())
 
-                        <!-- <div class="col-md-2 form-group {{ Session::has('country_code_error') ? 'has-error' : '' }}">
-                            {!! Form::label('Code',Lang::get('lang.country-code')) !!}
-                             @if($email_mandatory->status == 0 || $email_mandatory->status == '0')
-                                <span class="text-red"> *</span>
-                                @endif
-                            {!! Form::text('Code',null,['class' => 'form-control', 'placeholder' => $phonecode, 'title' => Lang::get('lang.enter-country-phone-code')]) !!}
-                        </div> -->
+                        
                         {!! Form::hidden('Code','62',['class' => 'form-control']) !!}
-                        <!-- <div class="col-md-5 form-group {{ $errors->has('mobile') ? 'has-error' : '' }}">
-                            {!! Form::label('mobile',Lang::get('lang.mobile_number')) !!}
-                             @if($email_mandatory->status == 0 || $email_mandatory->status == '0')
-                                    <span class="text-red"> *</span>
-                                    @endif
-                            {!! Form::text('mobile',null,['class' => 'form-control']) !!}
-                        </div> -->
+                       
                         <div class="col-md-5 form-group {{ $errors->has('Phone') ? 'has-error' : '' }}">
                             {!! Form::label('Phone',Lang::get('lang.phone')) !!}
                             {!! Form::text('Phone',null,['class' => 'form-control']) !!}
