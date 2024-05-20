@@ -63,7 +63,6 @@ class = "nav-item active"
     </div><!-- #sidebar -->
 --}}
 
-
 <div id="sidebar" class="site-sidebar col-md-3">
     <div id="form-border" class="comment-respond form-border" style="background : #fff">
         <section id="section-categories" class="section">
@@ -111,6 +110,23 @@ class = "nav-item active"
 @stop
 <!-- content -->
 @section('content')
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 36px;
+        font-size: 15px;
+    }
+    .select2-container .select2-selection--single {
+        height: 36px !important;
+    }
+    span.selection {
+        width: 100%;
+    }
+</style>
 
     <div id="content" class="site-content col-md-9">
 
@@ -186,21 +202,12 @@ class = "nav-item active"
                         </div>
                         @endif
 
-                        @if(!Auth::user())
-
-                        
                         {!! Form::hidden('Code','62',['class' => 'form-control']) !!}
-                       
                         <div class="col-md-5 form-group {{ $errors->has('Phone') ? 'has-error' : '' }}">
-                            {!! Form::label('Phone',Lang::get('lang.phone')) !!}
+                            {!! Form::label('Phone',Lang::get('lang.phone')) !!} <span class="text-red"> *</span>
                             {!! Form::text('Phone',null,['class' => 'form-control']) !!}
                         </div>
-                        @else
-                            {!! Form::hidden('mobile',Auth::user()->mobile,['class' => 'form-control']) !!}
-                            {!! Form::hidden('Code',Auth::user()->country_code,['class' => 'form-control']) !!}
-                            {!! Form::hidden('Phone',Auth::user()->phone_number,['class' => 'form-control']) !!}
-
-                       @endif
+                        
                         <div class="col-md-12 form-group {{ $errors->has('help_topic') ? 'has-error' : '' }}">
                             {!! Form::label('help_topic', Lang::get('lang.choose_a_help_topic')) !!}
                             {!! $errors->first('help_topic', '<spam class="help-block">:message</spam>') !!}
@@ -208,7 +215,7 @@ class = "nav-item active"
                             $forms = App\Model\helpdesk\Form\Forms::get();
                             $helptopic = App\Model\helpdesk\Manage\Help_topic::where('status', '=', 1)->get();
 //                            ?><!---->
-                            <select name="helptopic" class="form-control" id="selectid">
+                            <select name="helptopic" class="form-control select2" id="selectid">
 
                                 @foreach($helptopic as $topic)
                                 <option value="{!! $topic->id !!}">{!! $topic->topic !!}</option>
@@ -244,23 +251,65 @@ class = "nav-item active"
                         <div class="col-md-12 form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>{!! Lang::get('lang.kat_pemohon') !!}<span class="text-red"> *</span>
+                                    <label>Kategori Pemohon<span class="text-red"> *</span>
                                     </label>
                                 </div>
                                 <div class="col-md-12">
                                     <?php
                                     // $helptopic = App\Model\helpdesk\Manage\Help_topic::where('status', '=', 1)->get();
                                     ?><!---->
-                                    <select autocomplete="off" name="kat_pemohon" class="form-control" id="selectid">
-                                        <option value="0" selected>Eksternal</option>
-                                        @foreach($opd['products'] as $opdnya)
-                                        <option value="{{ $opdnya['id'] }}">{{ $opdnya['title'] }}</option>
+                                    <select autocomplete="off" name="pemohonnya" class="form-control select2" id="pemohonnya" required>
+                                        <option value="" selected>- Pilih -</option>
+                                        <option value="1">Internal</option>
+                                        <option value="2">Eksternal</option>
+                                    </select>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- --------------- -->
+                        
+                        <!-- kategori pemohon internal -->
+                        <div id="internal" class="col-md-12 form-group" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Kategori Internal<span class="text-red"> *</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <?php
+                                    // $helptopic = App\Model\helpdesk\Manage\Help_topic::where('status', '=', 1)->get();
+                                    ?><!---->
+                                    <select autocomplete="off" name="kat_pemohon" class="form-control select2" id="inputinternal">
+                                        <option value="" selected>- Pilih Perangkat Daerah -</option>
+                                        @foreach($opd['entry'] as $opdnya)
+                                        <option value="{{ $opdnya['id'] }}">{{ $opdnya['nama'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                              </div>
                         </div>
                         <!-- --------------- -->
+                        
+                        <!-- kategori pemohon eksternal -->
+                        <div id="eksternal" class="col-md-12 form-group" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Kategori Eksternal<span class="text-red"> *</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <?php
+                                    // $helptopic = App\Model\helpdesk\Manage\Help_topic::where('status', '=', 1)->get();
+                                    ?><!---->
+                                    <input type="hidden" value="99" name="kat_pemohon" id="inputeksternal">
+                                    <input type="text" class="form-control" name="kat_eksternal" placeholder="Ketik Nama Instansi atau asal Pemohon">
+                                </div>
+                             </div>
+                        </div>
+                        <!-- --------------- -->
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
 
                         <div class="col-md-12 form-group {{ $errors->has('Subject') ? 'has-error' : '' }}">
                             {!! Form::label('Subject',Lang::get('lang.subject')) !!}<span class="text-red"> *</span>
@@ -295,8 +344,33 @@ class = "nav-item active"
 | SELECTED FORM STORED IN SCRIPT
 |====================================================
 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
+    $('.select2').select2({
+        width: '100%'
+    });
+    
+    $('select[id="pemohonnya"]').on('change',function(){
+        jenis = $(this).val();
+        
+        if(jenis==1) { 
+            $('#internal').show();
+            $('#eksternal').hide();
+            $("#inputeksternal").prop('disabled', true);
+            $("#inputinternal").prop('disabled', false);
+            
+        } else {
+            $('#eksternal').show();
+            $('#internal').hide();
+            $("#inputinternal").prop('disabled', true);
+            $("#inputeksternal").prop('disabled', false);
+        }
+    });
+    
+    // ----------------------------
+
    var helpTopic = $("#selectid").val();
    send(helpTopic);
    $("#selectid").on("change",function(){

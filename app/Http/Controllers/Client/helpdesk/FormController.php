@@ -72,9 +72,10 @@ class FormController extends Controller
         $headers = [
             'Content-Type' => 'application/json'
         ];
-        $apiURL = 'https://dummyjson.com/products';
+        $apiURL = 'https://splp.denpasarkota.go.id/index.php/dev/master/opd';
         $response = Http::withHeaders($headers)->get($apiURL);
         $opd = $response->json();
+        
         // ----
         
         $categorys = $category->get();
@@ -119,7 +120,7 @@ class FormController extends Controller
         $headers = [
             'Content-Type' => 'application/json'
         ];
-        $apiURL = 'https://dummyjson.com/products';
+        $apiURL = 'https://splp.denpasarkota.go.id/index.php/dev/master/opd';
         $response = Http::withHeaders($headers)->get($apiURL);
         $opd = $response->json();
         // ----
@@ -220,8 +221,9 @@ class FormController extends Controller
     public function postedForm(User $user, ClientRequest $request, Ticket $ticket_settings, Ticket_source $ticket_source, Ticket_attachments $ta, CountryCode $code)
     {
         try {
-            $form_extras = $request->except('Name', 'Phone', 'Email', 'Subject', 'Details', 'helptopic', '_wysihtml5_mode', '_token', 'mobile', 'Code', 'priority', 'attachment', 'kat_pemohon');
+            $form_extras = $request->except('Name', 'Phone', 'Email', 'Subject', 'Details', 'helptopic', '_wysihtml5_mode', '_token', 'mobile', 'Code', 'priority', 'attachment', 'kat_pemohon', 'kat_eksternal');
             $kat_pemohon = $request->input('kat_pemohon');
+            $kat_eksternal = $request->input('kat_eksternal');
 
             $name = $request->input('Name');
             $phone = $request->input('Phone');
@@ -297,6 +299,7 @@ class FormController extends Controller
                     }
                 }
             }
+            
             event(new \App\Events\ClientTicketFormPost($form_extras, $email, $source));
             $result = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $kat_pemohon, $auto_response);
             // dd($result);
