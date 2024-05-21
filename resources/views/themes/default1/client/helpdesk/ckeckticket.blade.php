@@ -389,7 +389,7 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                                 <?php $ticket_form_datas = App\Model\helpdesk\Ticket\Ticket_Form_Data::where('ticket_id', '=', $tickets->id)->get(); ?>
                                 @if(isset($ticket_form_datas))
 
-                                <br/>
+                                <!-- <br/>
                                 <table class="table">
 
                                     <tbody>
@@ -400,11 +400,10 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                </table>
+                                </table> -->
                                 @endif
                                 @endif
                             </div><!-- .comment-content -->
-                            <br/><br/>
 
                             <div class="timeline-footer">
 
