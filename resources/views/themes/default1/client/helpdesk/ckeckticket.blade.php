@@ -73,7 +73,7 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                 <div class="col-sm-3 text-right">
 
                     @if( $common_setting->status == '1')
-
+                    <!--
                     <div>
 
                         <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: whitesmoke">
@@ -102,6 +102,7 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                             </a>
                         </div>
                     </div>
+                    -->
                     @endif
                 {!! Form::close() !!}
                 </div>
@@ -378,6 +379,9 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                                         }, 0);
                                     </script>
                                 @else
+                                    <div class="embed-responsive{{$conversation->id}} embed-responsive-16by9">
+                                        <div class="reply">{!! $conversation->purify(true) !!}</div>
+                                    </div>
                                 @endif
 
 

@@ -219,6 +219,7 @@
                                     class="nav-link">{!! Lang::get('lang.home') !!}</a></li>
 
                             {{-- @if ($system->first()->status == 1)
+
                 <li @yield('submit') class="nav-item">
                   <a href="{{ URL::route('form') }}" class="nav-link">{!! Lang::get('lang.submit_a_ticket') !!}</a>
                 </li>
@@ -402,6 +403,7 @@
                                 </div>
 
                                 <!-- <div class="col-md-12 text-center">
+
                                      {{ Lang::get('lang.or') }}
                                     <ul class="list-unstyled">
                                         <a href="{{ url('auth/register') }}" style="font-size: 1.2em">{!! Lang::get('lang.create_account') !!}</a>
@@ -748,6 +750,7 @@
 
     </div>
     </div>
+
 </body>
 
 </html>
