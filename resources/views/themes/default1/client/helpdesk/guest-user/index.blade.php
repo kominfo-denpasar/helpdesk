@@ -95,7 +95,9 @@
             <h2>Layanan</h2>
             <p>Kumpulan layanan yang tersedia pada paltform ini Anda dapat melihat informasi, syarat dan
                 formulir permohonan yang dibutuhkan untuk mengajukan permohonan</p>
+
             <a href="{{ url('/knowledgebase') }}" class="btn btn-primary">
+
                 Lihat {!! Lang::get('lang.knowledge_base') !!}
             </a>
         </div>

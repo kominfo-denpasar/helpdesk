@@ -132,7 +132,9 @@ return [
    'create_email'                                                                     => 'Create email',
    'email_address'                                                                    => 'Email address',
    'email_name'                                                                       => 'Email name',
+
    'help_topic'                                                                       => 'Kategori Layanan',
+
    'auto_response'                                                                    => 'Auto response',
    'host_name'                                                                        => 'Host name',
    'port_number'                                                                      => 'Port number',
@@ -545,7 +547,9 @@ return [
    'private'                               => 'Private',
    'parent_topic'                          => 'Parent topic',
    'Custom_form'                           => 'Custom form',
+
    'SLA_plan'                              => 'Level SLA',
+
    'sla-plans'                             => 'SLA plans',
    'auto_assign'                           => 'Auto assign',
    'auto_respons'                          => 'Auto response',
@@ -745,7 +749,9 @@ return [
    'user_name'    => 'User name',
    'status'       => 'Status',
    'group'        => 'Group',
+
    'department'   => 'Bidang/Unit Kerja',
+
    'created'      => 'Created',
    'lastlogin'    => 'Last login',
    'createagent'  => 'Create an agent',
@@ -1077,12 +1083,14 @@ return [
    'high'                                           => 'High',
    'medium'                                         => 'Medium',
    'low'                                            => 'Low',
+
    'sla_plan'                                       => 'Level SLA',
    'created_date'                                   => 'Waktu dibuat',
    'due_date'                                       => 'Waktu tenggat',
    'last_response'                                  => 'Terakhir direspon',
    'source'                                         => 'Source',
    'last_message'                                   => 'Pesan Terakhir dari',
+
    'reply'                                          => 'Reply',
    'response'                                       => 'Response',
    'reply_content'                                  => 'Reply content',
