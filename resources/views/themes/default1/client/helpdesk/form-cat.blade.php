@@ -318,7 +318,10 @@ class = "nav-item active"
                         <div class="col-md-12 form-group">
                             <input type="file" name="attachment[]" multiple/><br/>
                             {!! Lang::get('lang.max') !!}. {!! $max_size_in_actual !!}
+                            <br><small>Mohon berkas-berkas yang akan diupload dijadikan menjadi satu file</small>
                         </div>
+        
+
                         {{-- Event fire --}}
                         <?php \Illuminate\Support\Facades\Event::dispatch(new App\Events\ClientTicketForm()); ?>
                         

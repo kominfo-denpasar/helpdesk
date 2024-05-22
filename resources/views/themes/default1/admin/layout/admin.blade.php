@@ -340,7 +340,7 @@
             <aside class="main-sidebar elevation-4 sidebar-dark-orange">
 
                 <a href="{{ url('/') }}" class="brand-link navbar-dark" style="text-align: center;">
-                    <img src="{{ asset('uploads/company/1657.logo-bantuan.png')}}" class="brand-image" alt="Company Log0">
+                    <img src="{{ asset('uploads/company/logo-backend.png')}}" class="brand-image" alt="Company Log0">
                 </a>
 
                 <!-- sidebar: style can be found in sidebar.less -->
