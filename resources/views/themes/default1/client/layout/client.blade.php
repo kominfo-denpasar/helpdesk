@@ -193,7 +193,7 @@
                         @endif
                         @if ($company->use_logo == 1)
                             <img src="{{ asset('uploads/company') }}{{ '/' }}{{ $company->logo }}"
-                                alt="User Image" width="150px" height="150px" />
+                                alt="User Image" width="248px" height="150px" />
                         @else
                             @if ($system->name)
                                 {!! $system->name !!}
