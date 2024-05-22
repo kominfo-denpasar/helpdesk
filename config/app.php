@@ -88,7 +88,7 @@ return [
       | the language folders that are provided through your application.
       |
      */
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'id',
     /*
       |--------------------------------------------------------------------------
       | Encryption Key

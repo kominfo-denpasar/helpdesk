@@ -219,6 +219,7 @@
                                     class="nav-link">{!! Lang::get('lang.home') !!}</a></li>
 
                             {{-- @if ($system->first()->status == 1)
+
                 <li @yield('submit') class="nav-item">
                   <a href="{{ URL::route('form') }}" class="nav-link">{!! Lang::get('lang.submit_a_ticket') !!}</a>
                 </li>
@@ -402,6 +403,7 @@
                                 </div>
 
                                 <!-- <div class="col-md-12 text-center">
+
                                      {{ Lang::get('lang.or') }}
                                     <ul class="list-unstyled">
                                         <a href="{{ url('auth/register') }}" style="font-size: 1.2em">{!! Lang::get('lang.create_account') !!}</a>
@@ -731,7 +733,9 @@
             });
         </script>
         <!--Start of Tawk.to Script-->
-        <script type="text/javascript">
+
+        <!-- <script type="text/javascript">
+
             var Tawk_API = Tawk_API || {},
                 Tawk_LoadStart = new Date();
             (function() {
@@ -743,11 +747,14 @@
                 s1.setAttribute('crossorigin', '*');
                 s0.parentNode.insertBefore(s1, s0);
             })();
-        </script>
+
+        </script> -->
+
         <!--End of Tawk.to Script-->
 
     </div>
     </div>
+
 </body>
 
 </html>
