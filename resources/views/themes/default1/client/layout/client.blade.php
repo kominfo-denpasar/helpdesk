@@ -170,6 +170,9 @@
         .breadcrumb-item+.breadcrumb-item::before {
             color: #ffffff !important;
         }
+        .site-search .search-form {
+            width: 80%;
+        }
     </style>
 
     <div id="page" class="hfeed site text-small">
@@ -420,7 +423,7 @@
                 <div id="header-search" class="site-search clearfix" style="margin-right: 20%; width: 100%">
                     <!-- #header-search -->
                     {!! Form::open(['route' => 'client.search', 'class' => 'search-form clearfix']) !!}
-                    <div class="form-border" style="z-index: 0;width: 80%;">
+                    <div class="form-border" style="z-index: 0;">
                         <div class="form-inline ">
                             <div class="form-group input-group " style="width: 100% ">
                                 <input type="text" name="s" class="search-field form-control"
