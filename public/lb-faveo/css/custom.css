@@ -283,3 +283,19 @@ ul.dropdown-menu a.dropdown-item.active{
         display: none;
     }
 }
+
+@media(max-width: 768px){
+    .row > * {
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
+#logo {
+    width: 190px;
+    margin-left: 40px;
+}
+
+blockquote .btn {
+    margin-bottom: 5px;
+} 
