@@ -206,14 +206,14 @@
 
                     <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation" style="margin: 28px;float: right;">
+                        aria-expanded="false" aria-label="Toggle navigation" style="margin: 20px;float: right;">
 
                         <span class="navbar-toggler-icon"></span>
                     </button> <!-- collapse -->
 
                     <div class="collapse navbar-collapse links justify-content-end" id="navbarSupportedContent">
 
-                        <ul class="navbar-nav navbar-menu site-navigate ml-auto">
+                        <ul class="navbar-nav navbar-menu site-navigate ml-auto" style="margin-top: 8px;">
 
                             <li @yield('home') class="nav-item"><a href="{{ url('/') }}"
                                     class="nav-link">{!! Lang::get('lang.home') !!}</a></li>
@@ -420,16 +420,16 @@
                 <div id="header-search" class="site-search clearfix" style="margin-right: 20%; width: 100%">
                     <!-- #header-search -->
                     {!! Form::open(['route' => 'client.search', 'class' => 'search-form clearfix']) !!}
-                    <div class="form-border" style="z-index: 0;width: 85%;">
+                    <div class="form-border" style="z-index: 0;width: 80%;">
                         <div class="form-inline ">
-                            <div class="form-group input-group " style="width: 98% ">
+                            <div class="form-group input-group " style="width: 100% ">
                                 <input type="text" name="s" class="search-field form-control"
                                     title="Enter search term"
                                     placeholder="Ada yang ingin ditanyakan? Ketik pencarian Anda di sini..."
-                                    required="" style="width: 80%;margin-bottom:10px;">
+                                    required="" style="width: 50%;margin-right: 10px;">
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-custom btn-md "
-                                        style="margin-bottom: 10px;background-color: #003379; hov: #00c0ef; color: #fff ">Cari</button>
+                                        style="background-color: #003379; hov: #00c0ef; color: #fff ">Cari</button>
                                 </span>
                             </div>
 
