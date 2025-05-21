@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            404 Error Page
+            404 Error Page test
         </h1>
     </section>
 
