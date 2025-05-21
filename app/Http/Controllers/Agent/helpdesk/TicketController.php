@@ -386,6 +386,93 @@ class TicketController extends Controller
                 $agentsign = null;
             }
 
+            try {
+                $department = \App\Model\helpdesk\Agent\Department::where('id', $tickets->dept_id)->value('name') ?? '-';
+                $statusName = \App\Model\Helpdesk\Agent_panel\Canned::where('id', $tickets->status)->value('title') ?? '-';
+                $plainMessage = strip_tags($request->input('reply_content'));
+
+                $user = user::find($tickets->user_id);
+                if (!$user) {
+                    \Log::warning('User tidak ditemukan untuk tiket ID: ' . $tickets->id);
+                    return;
+                }
+
+                $rawPhone = $user->mobile ?: $user->phone_number;
+
+                // \Log::info('Nomor mobile user sebelum di proses:', ['mobile' => $rawPhone]);
+
+                // if (empty($rawPhone)) {
+                //     \Log::warning('User mobile kosong, proses dihentikan');
+                //     return;
+                // }
+
+                $receiver = preg_replace('/[^0-9]/', '', $rawPhone);
+
+                // if (empty($receiver)) {
+                //     \Log::warning('Nomor mobile kosong setelah pembersihan karakter.');
+                //     return;
+                // }
+
+                if (Str::startsWith($receiver, '0')) {
+                    $receiver = '62' . substr($receiver, 1);
+                }
+
+                if (!preg_match('/^62[0-9]{9,13}$/', $receiver)) {
+                    \Log::warning("Nomor Whatsapp tidak valid: " . $receiver);
+                    return;
+                }
+
+                function padLabel($label, $max = 14) {
+                    return str_pad($label, $max, ' ', STR_PAD_RIGHT);
+                }
+
+                $wa_message = "📥 Balasan untuk Tiket #{$tickets->ticket_number}\n\n"
+                . str_pad("📌 Subjek", 15).": {$ticket_subject}\n"
+                . str_pad("🏢 Departemen", 15).": {$department}\n"
+                . str_pad("📂 Status", 15).": {$statusName}\n\n"
+                . "📝 Pesan:\n{$plainMessage}";
+
+                $waApiUrl = env('WA_API_URL');
+                $waApiUser = env('WA_API_USERNAME');
+                $waApiPass = env('WA_API_PASSWORD');
+
+                $response = \Illuminate\Support\Facades\Http::withBasicAuth($waApiUser, $waApiPass) 
+                    ->withHeaders([
+                        'Content-Type' => 'application/json',
+                    ])
+                    ->post($waApiUrl, [
+                        'phone' => $receiver,
+                        'message' => $wa_message, 
+                    ]);
+
+                $responseData = $response->json();
+
+                // \Log::info("WA response", [
+                //      'status' => $response->status(),
+                //      'body' => $responseData,
+                //      'receiver' => $receiver,
+                // ]);
+
+                if ($response->successful() && ($responseData['code'] ?? '') === 'SUCCESS') {
+                    \Log::info("Pesan Whatsapp berhasil dikirim ke {$receiver}");
+                } else {
+                    \Log::error('Gagal kirim Whatsapp: ' . ($responseData['message'] ?? 'Tidak diketahui'));
+                    \Log::info("WA Request Body", [
+                        'url' => $waApiUrl,
+                        'user' => $waApiUser,
+                        'phone' => $receiver,
+                        'message' => $wa_message
+                    ]);
+                    \Log::info("WA Response Body", [
+                        'response' => $responseData,
+                        'http_status' => $response->status(),
+                    ]);
+                }
+
+            } catch (\Exception $e) {
+                \log::error('Gagal mengirim pesan WhatsApp: ' . $e->getMessage());
+            }
+
             // Event
             event(new \App\Events\FaveoAfterReply($reply_content, $user->mobile, $user->country_code, $request, $tickets, $thread));
             if (Auth::user()) {

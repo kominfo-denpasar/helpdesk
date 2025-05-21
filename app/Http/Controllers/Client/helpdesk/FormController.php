@@ -235,6 +235,43 @@ class FormController extends Controller
             if ($result[1] == 1) {
                 $ticketId = Tickets::where('ticket_number', '=', $result[0])->first();
                 $thread = Ticket_Thread::where('ticket_id', '=', $ticketId->id)->first();
+
+                try {
+                    $waApiUrl = env('WA_API_URL');
+                    $waApiUser = env('WA_API_USERNAME');
+                    $waApiPass = env('WA_API_PASSWORD');
+                    $adminPhone = env('WA_ADMIN_DEFAULT');
+
+                    $ticketNumber = $result[0];
+
+                    $priorityName = \App\Model\Helpdesk\Ticket\Ticket_Priority::where('priority_id', $priority)->value('priority');
+
+                    $wa_message = "🎫 *Tiket Baru Diterima*\n\n"
+                    . "• Nomor Tiket : *{$ticketNumber}*\n"
+                    . "• Email       : {$email}\n"
+                    . "• Subjek      : {$subject}\n"
+                    . "• Prioritas   : " . ($priorityName ?: $priority);
+
+                    $response = \Illuminate\Support\Facades\Http::withBasicAuth($waApiUser, $waApiPass)
+                        ->withHeaders([
+                            'Content-Type' => 'application/json',
+                        ])
+                        ->post($waApiUrl, [
+                            'phone' => $adminPhone,
+                            'message' => $wa_message,
+                        ]);
+                    
+                    $responseData = $response->json();
+
+                    if ($response->successful() && ($responseData['code'] ?? '') === 'SUCCESS') {
+                        \Log::info("Notifikasi Whatsapp berhasil dikirim ke admin: {$adminPhone}");
+                    } else {
+                        \Log::error("Gagal kirim Whatsapp ke admin: " . ($responseData['message'] ?? 'Tidak diketahui'));
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Exception seet kirim Whatsapp ke admin: ' . $e->getMessage());
+                }
+
                 if ($attachments != null) {
                     $storage = new \App\FaveoStorage\Controllers\StorageController();
                     $storage->saveAttachments($thread->id, $attachments);
