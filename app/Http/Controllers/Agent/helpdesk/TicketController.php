@@ -31,9 +31,11 @@ use App\Model\helpdesk\Ticket\Ticket_source;
 use App\Model\helpdesk\Ticket\Ticket_Status;
 use App\Model\helpdesk\Ticket\Ticket_Thread;
 use App\Model\helpdesk\Ticket\Tickets;
+use App\Model\helpdesk\Ticket\priority;
 use App\Model\helpdesk\Utility\CountryCode;
 use App\Model\helpdesk\Utility\Date_time_format;
 use App\Model\helpdesk\Utility\Timezones;
+use Illuminate\Support\Facades\Http;
 use App\User;
 use Auth;
 use Carbon\Carbon;
@@ -165,6 +167,70 @@ class TicketController extends Controller
             //create user
             $result = $this->create_user($email, $fullname, $subject, $body, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source->id, $headers, $help->department, $assignto, $form_data, $auto_response, $status, $duedate);
             if ($result[1]) {
+
+                // // Kirim pesan WhatsApp
+                // try {
+                //     $tickets = Tickets::where('ticket_number', $result[0])->first();
+                //     $user_id = Auth::check() ? Auth::id() : ($result[2] ?? null); // Pastikan result[2] memang ID user
+                //     $user = User::find($user_id);
+
+                //     if (!$user) {
+                //         \Log::error("User tidak ditemukan untuk user_id: " . ($user_id ?? 'NULL'));
+                //         return;
+                //     }
+
+                //     $rawPhone = $user->mobile ?: $user->phone_number;
+
+                //     if (!$rawPhone) {
+                //         \Log::warning("Nomor telepon kosong untuk user_id: " . $user->id);
+                //         return;
+                //     }
+
+                //     $waNumber = $rawPhone[0] == '0' ? '62' . substr($rawPhone, 1) : '62' . preg_replace('/[^0-9]/', '', $rawPhone);
+
+                //     if (!preg_match('/^62[1-9][0-9]{7,10}$/', $waNumber)) {
+                //         \Log::warning("Nomor WA tidak valid: " . $waNumber);
+                //         return;
+                //     }
+
+                //     \Log::info("Mengirim WA ke: $waNumber");
+
+                //     $priorityObj = \App\Model\helpdesk\Ticket\Ticket_Priority::find($tickets->priority_id);
+                //     $ticket_priority = $priorityObj ? $priorityObj->priority_desc : 'Tidak ada';
+
+                //     $statusObj = \App\Model\helpdesk\Ticket\Ticket_Status::find($tickets->status);
+                //     $ticket_status = $statusObj ? $statusObj->name : 'Tidak diketahui';
+
+                //     $message = "📄 Tiket Anda berhasil dibuat!\n" .
+                //             "Nomor Tiket : " . $result[0] . "\n" .
+                //             "Nama        : " . $request->input('first_name') . ' ' . $request->input('last_name') . "\n" .
+                //             "Subjek      : $subject\n" .
+                //             "Priority    : $ticket_priority\n" .
+                //             "Pesan       : $body\n" .
+                //             "Silakan simpan nomor tiket untuk pelacakan lebih lanjut.";
+
+                //     $response = Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))
+                //         ->post(env('WA_API_URL'), [
+                //             'phone' => $waNumber . '@s.whatsapp.net',
+                //             'message' => $message,
+                //         ]);
+
+                //     \Log::info('WA API Response: ' . $response->body());
+                //      \Log::info("respon from user: " . $message);
+                //     \Log::info("Mobile number from user: " . $waNumber);
+                //     \Log::error('WA API response: ' . $response->body());
+
+                //     $responseData = $response->json();
+                //     if (!($responseData['status'] ?? false)) {
+                //         \Log::error('Gagal kirim WA: ' . ($responseData['message'] ?? 'Tidak diketahui'));
+                //     }
+                // } catch (\Exception $waException) {
+                //     \Log::error('WA exception: ' . $waException->getMessage());
+                // }
+
+                
+                
+
                 $status = $this->checkUserVerificationStatus();
                 if ($status == 1) {
                     if ($api != false) {
@@ -431,6 +497,68 @@ class TicketController extends Controller
                         'system_link'   => $link,
                     ]
                 );
+
+                // // Mengirim pesan WhatsApp menggunakan Opensource versi menambhakan no. tlpn di tb_departemen
+                // try {
+                //     $rawPhone = $user->mobile ?: $user->phone_number;
+                //     $waNumber = $rawPhone[0] == '0' ? '62' . substr($rawPhone, 1) : '62' . $rawPhone;
+
+                    
+                
+                //     $priority = \App\Model\helpdesk\Ticket\Ticket_Priority::find($tickets->priority_id);
+                //     $ticket_priority = $priority ? $priority->priority_desc : 'Tidak ada';
+                
+                //     $status = \App\Model\helpdesk\Ticket\Ticket_Status::find($tickets->status);
+                //     $ticket_status = $status ? $status->name : 'Tidak diketahui';
+                
+                //     $waMessage = "Balasan untuk Tiket #{$ticket_number}\n\n"
+                //                  . "Subject   : {$ticket_subject}\n"
+                //                  . "Priority  : {$ticket_priority}\n"
+                //                  . "Status    : {$ticket_status}\n\n"
+                //                  . "Pesan:\n" . strip_tags($reply_content);
+                
+                //     // Kirim ke server WhatsApp Gateway Open Source
+                //     $response = Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))  // Menambahkan autentikasi dasar
+                //                     ->post(env('WA_API_URL'), [
+                //                         'phone' => $waNumber . '@s.whatsapp.net',
+                //                         'message' => $waMessage,
+                //                     ]);
+                                    
+                //     $responseData = $response->json();
+
+                // } catch (\Exception $waException) {
+                //     \Log::error('WA exception: ' . $waException->getMessage());
+                // }
+
+
+                 // Mengirim pesan WhatsApp menggunakan Opensource versi ambil dari no. tlpn di tb_user
+                try {
+                    $rawPhone = $user->mobile ?: $user->phone_number;
+                    $waNumber = $rawPhone[0] == '0' ? '62' . substr($rawPhone, 1) : '62' . $rawPhone;
+
+                    $priority = \App\Model\helpdesk\Ticket\Ticket_Priority::find($tickets->priority_id);
+                    $ticket_priority = $priority ? $priority->priority_desc : 'Tidak ada';
+                
+                    $status = \App\Model\helpdesk\Ticket\Ticket_Status::find($tickets->status);
+                    $ticket_status = $status ? $status->name : 'Tidak diketahui';
+                    $waMessage = "Balasan untuk Tiket #{$ticket_number}\n\n"
+                                . "Subject   : {$ticket_subject}\n"
+                                . "Priority  : {$ticket_priority}\n"
+                                . "Status    : {$ticket_status}\n\n"
+                                . "Pesan:\n" . strip_tags($reply_content);
+                    // Kirim ke WhatsApp Open Source
+                    $response = Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))  // add basic autentikasi 
+                                    ->post(env('WA_API_URL'), [
+                                        'phone' => $waNumber . '@s.whatsapp.net',
+                                        'message' => $waMessage,
+                                    ]);                
+                    $responseData = $response->json();
+
+                } catch (\Exception $waException) {
+                    \Log::error('WA exception: ' . $waException->getMessage());
+                }
+                               
+                
             }
         } catch (\Exception $e) {
             $result = ['fails' => $e->getMessage()];
