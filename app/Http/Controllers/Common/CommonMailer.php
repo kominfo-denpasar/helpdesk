@@ -14,8 +14,12 @@ class CommonMailer
                 return false;
             }
             $transport = new EsmtpTransport($config['host'], $config['port']);
-            $transport->setUsername($config['username']);
-            $transport->setPassword($config['password']);
+
+            $username = isset($config['username']) && $config['username'] !== null ? $config['username'] : '';
+            $passowrd = isset($config['password']) && $config['password'] !== null ? $config['password'] : '';
+
+            $transport->setUsername($username);
+            $transport->setPassword($passowrd);
 
             // Set the mailer
             \Mail::setSymfonyTransport($transport);
