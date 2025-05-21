@@ -31,9 +31,11 @@ use App\Model\helpdesk\Ticket\Ticket_source;
 use App\Model\helpdesk\Ticket\Ticket_Status;
 use App\Model\helpdesk\Ticket\Ticket_Thread;
 use App\Model\helpdesk\Ticket\Tickets;
+use App\Model\helpdesk\Ticket\priority;
 use App\Model\helpdesk\Utility\CountryCode;
 use App\Model\helpdesk\Utility\Date_time_format;
 use App\Model\helpdesk\Utility\Timezones;
+use Illuminate\Support\Facades\Http;
 use App\User;
 use Auth;
 use Carbon\Carbon;
@@ -61,6 +63,13 @@ use Yajra\DataTables\Facades\DataTables;
  */
 class TicketController extends Controller
 {
+
+    /**
+     * @OA\Info(
+     *     title="Helpdesk API",
+     *     version="1.0.0"
+     * )
+     */
     /**
      * Create a new controller instance.
      *
@@ -432,6 +441,92 @@ class TicketController extends Controller
                         'system_link'   => $link,
                     ]
                 );
+
+                // Mengirim pesan WhatsApp menggunakan API Wablas
+                // try {
+                //     // Mengambil nomor telepon dari user
+                //     $rawPhone = $user->mobile ?: $user->phone_number;
+                //     $waNumber = '62' . ltrim($rawPhone, '0');
+                    
+                //     // Mengambil data priority dan status tiket
+                //     $priority = \App\Model\helpdesk\Ticket\Ticket_Priority::find($tickets->priority_id);
+                //     $ticket_priority = $priority ? $priority->priority_desc : 'Tidak ada';
+
+                //     $status = \App\Model\helpdesk\Ticket\Ticket_Status::find($tickets->status);
+                //     $ticket_status = $status ? $status->name : 'Tidak diketahui';
+
+                //     // Menyiapkan pesan WhatsApp
+                //     $waMessage = "Balasan untuk Tiket #{$ticket_number}\n\n"
+                //                 . "Subject   : {$ticket_subject}\n"
+                //                 . "Priority  : {$ticket_priority}\n"
+                //                 . "Status    : {$ticket_status}\n\n"
+                //                 . "Pesan:\n" . strip_tags($reply_content);
+                
+                //     // Mengirim pesan melalui API Wablas
+                //     $response = Http::withHeaders([
+                //         'Authorization' => '5wIi0vv1X3cCzXt6pscmZSZr9d91ieAwNvAyU1rQTsQAF840NIccQHG'
+                //     ])->post('https://bdg.wablas.com/api/v2/send-message', [
+                //         'data' => [[
+                //             'phone' => $waNumber,
+                //             'message' => $waMessage,
+                //         ]],
+                //         'secret' => true,
+                //         'priority' => false,
+                //     ]);
+                
+                //     // Mengecek status dari API Wablas
+                //     $responseData = $response->json();
+                
+                //     if (!($responseData['status'] ?? false)) {
+                //         \Log::error('Gagal kirim WA: ' . ($responseData['message'] ?? ''));
+                //     }
+                // } catch (\Exception $waException) {
+                //     \Log::error('WA exception: ' . $waException->getMessage());
+                // }
+            
+                // Sending Reply message to whatsapp using Opensource WA API
+                try {
+                    $rawPhone = $user->mobile ?: $user->phone_number;
+                    $waNumber = $rawPhone[0] == '0' ? '62' . substr($rawPhone, 1) : '62' . $rawPhone;
+
+                    $priority = \App\Model\helpdesk\Ticket\Ticket_Priority::find($tickets->priority_id);
+                    $ticket_priority = $priority ? $priority->priority_desc : 'Tidak ada';
+                
+                    $status = \App\Model\helpdesk\Ticket\Ticket_Status::find($tickets->status);
+                    $ticket_status = $status ? $status->name : 'Tidak diketahui';
+                
+                    $waMessage = "Balasan untuk Tiket #{$ticket_number}\n\n"
+                                . "Subject   : {$ticket_subject}\n"
+                                . "Priority  : {$ticket_priority}\n"
+                                . "Status    : {$ticket_status}\n\n"
+                                . "Pesan:\n" . strip_tags($reply_content);
+                
+                    // Kirim ke server WhatsApp Gateway Open Source
+                    $response = Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))  // add basic autentikasi 
+                                    ->post(env('WA_API_URL'), [
+                                        'phone' => $waNumber . '@s.whatsapp.net',
+                                        'message' => $waMessage,
+                                    ]);
+                
+                    $responseData = $response->json();
+
+                    if (!preg_match('/^62[1-9][0-9]{7,10}$/', $waNumber)) {
+                        \Log::warning("Nomor WA tidak valid: " . $waNumber);
+                        return;
+                    }                    
+
+                    //DUMB
+                    // \Log::info("respon from user: " . $waMessage);
+                    // \Log::info("Mobile number from user: " . $waNumber);
+                    // \Log::error('WA API response: ' . $response->body());
+                
+                    if (!($responseData['status'] ?? false)) {
+                        \Log::error('Gagal kirim WA (Oper Source): ' . ($responseData['message'] ?? ''));
+                    }
+                } catch (\Exception $waException) {
+                    \Log::error('WA exception: ' . $waException->getMessage());
+                }
+                
             }
         } catch (\Exception $e) {
             $result = ['fails' => $e->getMessage()];
