@@ -20,9 +20,11 @@ use App\Model\helpdesk\Ticket\Ticket_source;
 use App\Model\helpdesk\Ticket\Ticket_Thread;
 use App\Model\helpdesk\Ticket\Tickets;
 use App\Model\helpdesk\Utility\CountryCode;
+use App\Model\helpdesk\Agent\Department;
 use App\User;
 use Exception;
 // classes
+use Auth;
 use Form;
 use GeoIP;
 use Illuminate\Http\Request;
@@ -233,11 +235,210 @@ class FormController extends Controller
             $result = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $auto_response);
             // dd($result);
             if ($result[1] == 1) {
-                $ticketId = Tickets::where('ticket_number', '=', $result[0])->first();
-                $thread = Ticket_Thread::where('ticket_id', '=', $ticketId->id)->first();
+                $ticket = Tickets::where('ticket_number', '=', $result[0])->first();
+                $thread = Ticket_Thread::where('ticket_id', '=', $ticket->id)->first();
+                
                 if ($attachments != null) {
                     $storage = new \App\FaveoStorage\Controllers\StorageController();
-                    $storage->saveAttachments($thread->id, $attachments);
+                    $storage->saveAttachments($thread->id, $attachments);           
+                    
+                    // // Kirim pesan WhatsApp -> api ke agent yang sesuai
+                    // try {
+                    //     // Ambil data tiket
+                    //     $tickets = Tickets::where('ticket_number', $result[0])->first();
+                        
+                    //     // Ambil help topic dari tiket
+                    //     $helpTopicId = $tickets->help_topic_id;
+                    //     $helpTopic = \App\Model\helpdesk\Manage\Help_topic::where('id', $helpTopicId)->first();
+                    //     if (!$tickets || !$tickets->help_topic_id) {
+                    //         \Log::warning("Tiket tidak ditemukan atau tidak punya help topic");
+                    //         return;
+                    //     }
+                    
+                    //     if (!$helpTopic) {
+                    //         \Log::error("Help topic tidak ditemukan");
+                    //         return;
+                    //     }
+                    
+                    //     // Ambil departemen dari help topic
+                    //     $department = Department::find($helpTopic->department);
+
+                    //     if (!$department) {
+                    //         \Log::error("Departemen tidak ditemukan untuk help topic dengan ID: " . $helpTopic->id);
+                    //         return;  // Menghentikan eksekusi jika departemen tidak ditemukan
+                    //     }
+
+                    //     // Ambil nama departemen dengan aman
+                    //     $departmentId= $department->id;
+
+                    
+                    //     // Cari agen berdasarkan departemen yang sesuai
+                    //     $agent = \App\User::where('primary_dpt', $departmentId)->first();
+                    
+                    //     if (!$agent) {
+                    //         \Log::warning("Agen tidak ditemukan untuk departemen ID {$departmentId}");
+                    //         return;
+                    //     } else {
+                    //         $mobile = $agent->mobile;
+                    //         $phone = $agent->phone_number;
+                    
+                    //         \Log::info('Nomor WA agen:', ['mobile' => $mobile, 'phone' => $phone]);
+                    
+                    //         $nomorWa = $mobile ?: $phone;
+                    
+                    //         if (!$nomorWa) {
+                    //             \Log::warning("Nomor WA agen kosong");
+                    //         }
+                    //     }
+                    
+                    //     \Log::info('Nomor WA agen:', ['mobile' => $agent->mobile, 'phone' => $agent->phone_number]);
+                    
+                    //     if (!$nomorWa) {
+                    //         \Log::warning("Nomor WA agen kosong");
+                    //         return;
+                    //     }
+                    
+                    //     // Ambil deskripsi atau pesan tiket
+                    //     $pesan = $request->input('Details');
+                    //     if (!$pesan) {
+                    //         \Log::warning("Deskripsi tiket kosong");
+                    //         return;
+                    //     }
+                    
+                    //     // Format nomor
+                    //     $waNumber = $nomorWa[0] == '0' ? '62' . substr($nomorWa, 1) : '62' . preg_replace('/[^0-9]/', '', $nomorWa);
+                    //     if (!preg_match('/^62[1-9][0-9]{7,10}$/', $waNumber)) {
+                    //         \Log::warning("Nomor WA agen tidak valid: " . $waNumber);
+                    //         return;
+                    //     }
+                        
+                    //     $priority = \App\Model\helpdesk\Ticket\Ticket_Priority::find($ticket->priority_id);
+                    //     $ticket_priority = $priority ? $priority->priority_desc : 'Tidak ada';
+                    
+                    //     // Defining the message
+                    //     $message = "📥 Ada tiket baru dari user\n" .
+                    //                "Nomor Tiket : " . $tickets->ticket_number . "\n" .
+                    //                "Pemohon     : " . $name . "\n" .
+                    //                "Subjek      : " . $subject . "\n" .
+                    //                "Kategori    : " . $helpTopic->topic . "\n" .
+                    //                "Departemen  : " . $department->name . "\n" .
+                    //                "Priority    : " . $ticket_priority .  "\n" .
+                    //                "\n" .
+                    //                "Pesan       : " . strip_tags($pesan) . "\n";
+                    
+                    //     // Send the WhatsApp message
+                    //     $response = \Illuminate\Support\Facades\Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))
+                    //             ->post(env('WA_API_URL'), [
+                    //                 'phone' => $waNumber . '@s.whatsapp.net',
+                    //                 'message' => $message,
+                    //             ]);
+                    
+                    //     \Log::debug("Help Topic ID: " . $helpTopicId);
+                    //     \Log::info('WA ke agen dikirim: ' . $response->body());
+                    
+                    // } catch (\Exception $e) {
+                    //     \Log::error('Gagal kirim WA ke agen: ' . $e->getMessage());
+                    // }
+                
+
+                     try {
+                            $department = \App\Model\helpdesk\Agent\Department::find($ticket->dept_id);
+                            $phone_dept = $department ? $department->phone_num : null;
+
+                            $waNumber = $phone_dept ? ($phone_dept[0] == '0' ? '62' . substr($phone_dept, 1) : '62' . $phone_dept) : null;
+
+                            $priority = \App\Model\helpdesk\Ticket\Ticket_Priority::find($ticket->priority_id);                        
+                            $status = \App\Model\helpdesk\Ticket\Ticket_Status::find($ticket->status);
+                            $helptopic = \App\Model\helpdesk\Manage\Help_topic::find($ticket->help_topic_id);
+
+                            $waMessage = "📥 Ticket Masuk dengan Nomer ticket : {$ticket_num}\n\n"
+                                        . "Pemohon   : {$name}\n"
+                                        . "Kategori  : {$helptopic_name}\n"
+                                        . "Subject   : {$subject}\n"
+                                        . "Priority  : {$ticket_priority}\n"
+                                        . "Permohonan :\n" . strip_tags($details);
+                        
+                            $response = \Illuminate\Support\Facades\Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))
+                                    ->post(env('WA_API_URL'), [
+                                    'phone' => $waNumber . '@s.whatsapp.net',
+                                    'message' => $waMessage,
+                                ]);
+                        
+                            $responseData = $response->json();
+                       
+                        } catch (\Exception $waException) {
+                            \Log::error('WA exception (Uji Coba): ' . $waException->getMessage());
+                        } 
+    }  
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    // // Kirim pesan WhatsApp -> api ke user
+                    // try {
+                    //     $tickets = Tickets::where('ticket_number', $result[0])->first();
+                    //     $user_id = Auth::check() ? Auth::id() : ($result[2] ?? null);
+                    //     $user = User::find($user_id);
+
+                    //     if (!$user) {
+                    //         \Log::error("User tidak ditemukan untuk user_id: " . ($user_id ?? 'NULL'));
+                    //         throw new \Exception("User tidak ditemukan.");
+                    //     }
+
+                    //     $rawPhone = $user->mobile ?: $user->phone_number;
+
+                    //     if (!$rawPhone) {
+                    //         \Log::warning("Nomor telepon kosong untuk user_id: " . $user->id);
+                    //         throw new \Exception("Nomor telepon kosong.");
+                    //     }
+
+                    //     $waNumber = $rawPhone[0] == '0' ? '62' . substr($rawPhone, 1) : '62' . preg_replace('/[^0-9]/', '', $rawPhone);
+
+                    //     if (!preg_match('/^62[1-9][0-9]{7,10}$/', $waNumber)) {
+                    //         \Log::warning("Nomor WA tidak valid: " . $waNumber);
+                    //         throw new \Exception("Nomor WA tidak valid.");
+                    //     }
+
+                    //     $priorityObj = \App\Model\helpdesk\Ticket\Ticket_Priority::find($tickets->priority_id);
+                    //     $ticket_priority = $priorityObj ? $priorityObj->priority_desc : 'Tidak ada';
+
+                    //     $statusObj = \App\Model\helpdesk\Ticket\Ticket_Status::find($tickets->status);
+                    //     $ticket_status = $statusObj ? $statusObj->name : 'Tidak diketahui';
+
+                    //     $message = "📄 Tiket Anda berhasil dibuat!\n" .
+                    //         "Nomor Tiket : " . $result[0] . "\n" .
+                    //         "Nama        : " . $name . "\n" .
+                    //         "Subjek      : $subject\n" .
+                    //         "Priority    : $ticket_priority\n" .
+                    //         "Pesan       : " . strip_tags($details) . "\n" .
+                    //         "Silakan simpan nomor tiket untuk pelacakan lebih lanjut.";
+
+                    //     $response = \Illuminate\Support\Facades\Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))
+                    //         ->post(env('WA_API_URL'), [
+                    //             'phone' => $waNumber . '@s.whatsapp.net',
+                    //             'message' => $message,
+                    //         ]);
+
+                    //     \Log::info('WA API Response: ' . $response->body());
+                    //     \Log::debug("Nomor WA final: " . $waNumber);
+
+                    //     $responseData = $response->json();
+                    //     if (!($responseData['status'] ?? false)) {
+                    //         \Log::error('Gagal kirim WA: ' . ($responseData['message'] ?? 'Tidak diketahui'));
+                    //     }
+                    // } catch (\Exception $waException) {
+                    //     \Log::error('WA exception: ' . $waException->getMessage());
+                    // }
+
+
+
+
 //                    foreach ($attachments as $attachment) {
 //                        if ($attachment != null) {
 //                            $name = $attachment->getClientOriginalName();
@@ -248,7 +449,7 @@ class FormController extends Controller
 //                            $ta->create(['thread_id' => $thread->id, 'name' => $name, 'size' => $size, 'type' => $type, 'file' => $data, 'poster' => 'ATTACHMENT']);
 //                        }
 //                    }
-                }
+                
                 // dd($result);
                 return Redirect::back()->with('success', Lang::get('lang.Ticket-has-been-created-successfully-your-ticket-number-is').' '.$result[0].'. ');
             } else {

@@ -19,6 +19,17 @@ class Tickets extends BaseModel
         return $this->hasMany(\App\Model\helpdesk\Ticket\Ticket_Thread::class, 'ticket_id');
     }
 
+    public function priority()
+    {
+        return $this->belongsTo(\App\Model\helpdesk\Ticket\Ticket_Priority::class, 'priority_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(\App\Model\helpdesk\Ticket\Ticket_Status::class, 'status');
+    }
+
+
     public function collaborator()
     {
         return $this->hasMany(\App\Model\helpdesk\Ticket\Ticket_Collaborator::class, 'ticket_id');
