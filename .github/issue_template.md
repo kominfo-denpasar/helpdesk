@@ -1,7 +1,18 @@
-- Versi: #.#.#
-- PHP:
+- Faveo Version : #.#.#
+- PHP version :
+- Database Driver & Version :
+- Server specification :
 
-#### Deskripsi:
+#### Description:
 
 
-#### Step-step:
+#### Steps To Reproduce:
+
+
+
+#### Downloaded from
+- [ ] master-branch
+
+- [ ] development-branch
+
+- [ ] release-tag

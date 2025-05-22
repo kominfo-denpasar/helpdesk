@@ -14,4 +14,3 @@ Homestead.json
 /app/FaveoJob
 /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
 /storage/app/attachments
-/vendor
