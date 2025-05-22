@@ -134,7 +134,8 @@ class Ticket_Thread extends Model
     public function getSubject()
     {
         $subject = strip_tags($this->attributes['title']);
-        $array = imap_mime_header_decode($subject);
+        // $array = imap_mime_header_decode($subject);
+        $array = $subject;
         $title = '';
         if (is_array($array) && count($array) > 0) {
             foreach ($array as $text) {

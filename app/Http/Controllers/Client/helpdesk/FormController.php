@@ -238,6 +238,21 @@ class FormController extends Controller
                 $details = $request->input('Details');
                 $phonecode = $request->input('Code');
                 $mobile_number = $request->input('mobile') ?: null;
+
+                $kat_pemohon = $request->input('kat_pemohon');
+                $kat_eksternal = $request->input('kat_eksternal');
+
+                // get data perangkat daerah from external
+                $headers = [
+                    'Content-Type' => 'application/json'
+                ];
+                $apiURL = 'https://splp.denpasarkota.go.id/index.php/dev/master/opd';
+                $response = Http::withHeaders($headers)->get($apiURL);
+                $opd = $response->json();
+
+                $opd_nama = $opd['entry'][$kat_pemohon]['nama'];
+
+                // dd($kat_pemohon, $opd_nama);
         
                 $status = $ticket_settings->first()->status;
                 $helptopic = $request->input('helptopic');
@@ -282,7 +297,7 @@ class FormController extends Controller
                 $result = $this->TicketWorkflowController->workflow(
                     $email, $name, $subject, $details, $phone, $phonecode, $mobile_number,
                     $helptopic, $sla, $priority, $source, $collaborator, $department,
-                    $assignto, $team_assign, $status, $form_extras, $auto_response
+                    $assignto, $team_assign, $status, $form_extras, $kat_pemohon, $auto_response
                 );
         
                 if ($result[1] == 1) {
@@ -300,8 +315,10 @@ class FormController extends Controller
                         // $waNumber = '6281913842931'; // hardcoded test number
                         // $waNumber = $phone[0] == '0' ? '62' . substr($phone, 1) : '62' . $phone;
                         $department = \App\Model\helpdesk\Agent\Department::find($ticket->dept_id);
-                        $phone_dept = $department ? $department->phone_num : null;
 
+                        // ambil nomor WA dari manager department
+                        $manager = \App\Model\helpdesk\Agent\Agents::find($department->manager);
+                        $phone_dept = $manager ? $manager->phone_number : null;
                         $waNumber = $phone_dept ? ($phone_dept[0] == '0' ? '62' . substr($phone_dept, 1) : '62' . $phone_dept) : null;
 
                         $priority = \App\Model\helpdesk\Ticket\Ticket_Priority::find($ticket->priority_id);
@@ -315,12 +332,13 @@ class FormController extends Controller
 
                         $ticket_num = $ticket ? $ticket->ticket_number : 'Tidak ada';
 
-                        $waMessage = "📥 Ticket Masuk dengan Nomer ticket : {$ticket_num}\n\n"
-                                    . "Pemohon   : {$name}\n"
-                                    . "Kategori  : {$helptopic_name}\n"
-                                    . "Subject   : {$subject}\n"
-                                    . "Priority  : {$ticket_priority}\n\n"
-                                    . "Permohonan :\n" . strip_tags($details);
+                        $waMessage = "📥 Tiket Masuk dengan Nomor tiket: {$ticket_num}\n\n"
+                                    . "Nama Pemohon: {$name}\n"
+                                    . "Perangkat Daerah: {$opd_nama}\n"
+                                    . "Kategori: {$helptopic_name}\n"
+                                    . "Subject: {$subject}\n"
+                                    . "Priority: {$ticket_priority}\n\n"
+                                    . "Permohonan:\n" . strip_tags($details);
                     
                         $response = Http::withBasicAuth(env('WA_API_AUTH_USER'), env('WA_API_AUTH_PASS'))
                             ->post(env('WA_API_URL'), [

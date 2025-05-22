@@ -174,7 +174,8 @@ function getStatusArray($status)
 function utfEncoding($name)
 {
     $title = '';
-    $array = imap_mime_header_decode($name);
+    // $array = imap_mime_header_decode($name);
+    $array = $name;
     if (is_array($array) && count($array) > 0) {
         foreach ($array as $text) {
             $title .= $text->text;
