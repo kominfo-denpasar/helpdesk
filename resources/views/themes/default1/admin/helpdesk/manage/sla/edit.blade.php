@@ -68,7 +68,7 @@ class="nav-link active"
             <div class="col-md-4">
                 <div class="form-group {{ $errors->has('grace_period') ? 'has-error' : '' }}">
                     {!! Form::label('grace_period',Lang::get('lang.grace_period')) !!}
-                    {!! Form::select('grace_period',['6 Hours'=>'6 Hours', '12 Hours'=>'12 Hours', '18 Hours'=>'18 Hours', '24 Hours'=>'24 Hours', '36 Hours'=>'36 Hours', '48 Hours'=>'48 Hours'],null,['class' => 'form-control']) !!}
+                    {!! Form::select('grace_period',['6 Hours'=>'6 Jam', '12 Hours'=>'12 Jam', '18 Hours'=>'18 Jam', '24 Hours'=>'24 Jam', '36 Hours'=>'36 Jam', '48 Hours'=>'48 Jam'],null,['class' => 'form-control']) !!}
                 </div>
             </div>
             <!-- status radio: required: Active|Dissable -->

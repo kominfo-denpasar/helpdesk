@@ -37,8 +37,12 @@ class PageController extends Controller
     {
         // checking authentication
         $this->middleware('auth');
+        
         // checking roles
-        $this->middleware('roles');
+        // $this->middleware('roles');
+        // checking if role is agent
+        $this->middleware('role.agent');
+
         $this->page = $page;
         SettingsController::language();
     }

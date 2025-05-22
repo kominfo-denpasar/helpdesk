@@ -116,6 +116,22 @@ class="nav-item menu-open"
                         {!! Form::textarea('description',$article->description,['class' => 'form-control article_desc','id'=>'editor','size' => '128x20','placeholder'=>Lang::get('lang.enter_the_description')]) !!}
                     </div>
                 </div>
+
+                <div class="form-group {{ $errors->has('rules') ? 'has-error' : '' }}">
+                    {!! Form::label('rules',Lang::get('lang.rules')) !!} <span class="text-red"> *</span>
+
+                    <div class="form-group" style="background-color:white">
+                        {!! Form::textarea('rules',$article->rules,['class' => 'form-control article_desc','id'=>'editor','size' => '128x20','placeholder'=>Lang::get('lang.enter_the_description')]) !!}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 form-group {{ $errors->has('link_form') ? 'has-error' : '' }}" >
+                        {!! Form::label('link_form',Lang::get('lang.link_form')) !!}
+
+                        {!! Form::text('link_form',null,['class' => 'form-control']) !!}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

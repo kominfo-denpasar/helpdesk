@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 // requests
 use App\Http\Requests\helpdesk\ClientRequest;
 // models
+use App\Model\kb\Category;
+
 use App\Model\helpdesk\Form\Fields;
 use App\Model\helpdesk\Manage\Help_topic;
 use App\Model\helpdesk\Settings\CommonSettings;
@@ -28,6 +30,8 @@ use GeoIP;
 use Illuminate\Http\Request;
 use Lang;
 use Redirect;
+
+use Illuminate\Support\Facades\Http;
 
 /**
  * FormController.
@@ -62,8 +66,71 @@ class FormController extends Controller
      *
      * @return type
      */
-    public function getForm(Help_topic $topic, CountryCode $code)
+    public function getForm(Help_topic $topic, CountryCode $code, Category $category)
     {
+        // get data perangkat daerah from external
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+        $apiURL = 'https://splp.denpasarkota.go.id/index.php/dev/master/opd';
+        $response = Http::withHeaders($headers)->get($apiURL);
+        $opd = $response->json();
+        
+        // ----
+        
+        $categorys = $category->get();
+
+        // if (\Config::get('database.install') == '%0%') {
+        //     return \Redirect::route('licence');
+        // }
+        $settings = CommonSettings::select('status')->where('option_name', '=', 'send_otp')->first();
+        $email_mandatory = CommonSettings::select('status')->where('option_name', '=', 'email_mandatory')->first();
+        if (!\Auth::check() && ($settings->status == 1 || $settings->status == '1')) {
+            return redirect('auth/login')->with(['login_require' => 'Please login to your account for submitting a ticket', 'referer' => 'form']);
+        }
+        // $location = GeoIP::getLocation();
+        // $phonecode = $code->where('iso', '=', $location->iso_code)->first();
+        if (System::first()->status == 1) {
+            $topics = $topic->get();
+            // $codes = $code->get();
+            // if ($phonecode->phonecode) {
+            //     $phonecode = $phonecode->phonecode;
+            // } else {
+            //     $phonecode = '';
+            // }
+
+            [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
+
+            return view('themes.default1.client.helpdesk.form', compact('topics', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'));
+        } else {
+            return \Redirect::route('home');
+        }
+    }
+
+    /**
+     * getformCat.
+     *
+     * @param type Help_topic $topic
+     *
+     * @return type
+     */
+    public function getFormCat($cat, Help_topic $topic, CountryCode $code, Category $category)
+    {
+        // get data perangkat daerah from external
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+        $apiURL = 'https://splp.denpasarkota.go.id/index.php/dev/master/opd';
+        $response = Http::withHeaders($headers)->get($apiURL);
+        $opd = $response->json();
+        // ----
+        
+        $topicnya = Help_topic::where('slug', '=', $cat)->first();
+        if($topicnya===null){
+            return \Redirect::route('error404');
+        }
+        $categorys = $category->get();
+
         if (\Config::get('database.install') == '%0%') {
             return \Redirect::route('licence');
         }
@@ -72,20 +139,20 @@ class FormController extends Controller
         if (!\Auth::check() && ($settings->status == 1 || $settings->status == '1')) {
             return redirect('auth/login')->with(['login_require' => 'Please login to your account for submitting a ticket', 'referer' => 'form']);
         }
-        $location = GeoIP::getLocation();
-        $phonecode = $code->where('iso', '=', $location->iso_code)->first();
+        // $location = GeoIP::getLocation();
+        // $phonecode = $code->where('iso', '=', $location->iso_code)->first();
         if (System::first()->status == 1) {
             $topics = $topic->get();
-            $codes = $code->get();
-            if ($phonecode->phonecode) {
-                $phonecode = $phonecode->phonecode;
-            } else {
-                $phonecode = '';
-            }
+            // $codes = $code->get();
+            // if ($phonecode->phonecode) {
+            //     $phonecode = $phonecode->phonecode;
+            // } else {
+            //     $phonecode = '';
+            // }
 
             [$max_size_in_bytes, $max_size_in_actual] = $this->fileUploadController->file_upload_max_size();
 
-            return view('themes.default1.client.helpdesk.form', compact('topics', 'codes', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual'))->with('phonecode', $phonecode);
+            return view('themes.default1.client.helpdesk.form-cat', compact('topics', 'topicnya', 'categorys', 'email_mandatory', 'max_size_in_bytes', 'max_size_in_actual', 'opd'));
         } else {
             return \Redirect::route('home');
         }
@@ -154,7 +221,10 @@ class FormController extends Controller
     public function postedForm(User $user, ClientRequest $request, Ticket $ticket_settings, Ticket_source $ticket_source, Ticket_attachments $ta, CountryCode $code)
     {
         try {
-            $form_extras = $request->except('Name', 'Phone', 'Email', 'Subject', 'Details', 'helptopic', '_wysihtml5_mode', '_token', 'mobile', 'Code', 'priority', 'attachment');
+            $form_extras = $request->except('Name', 'Phone', 'Email', 'Subject', 'Details', 'helptopic', '_wysihtml5_mode', '_token', 'mobile', 'Code', 'priority', 'attachment', 'kat_pemohon', 'kat_eksternal');
+            $kat_pemohon = $request->input('kat_pemohon');
+            $kat_eksternal = $request->input('kat_eksternal');
+
             $name = $request->input('Name');
             $phone = $request->input('Phone');
             if ($request->input('Email')) {
@@ -229,8 +299,9 @@ class FormController extends Controller
                     }
                 }
             }
+            
             event(new \App\Events\ClientTicketFormPost($form_extras, $email, $source));
-            $result = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $auto_response);
+            $result = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $kat_pemohon, $auto_response);
             // dd($result);
             if ($result[1] == 1) {
                 $ticketId = Tickets::where('ticket_number', '=', $result[0])->first();

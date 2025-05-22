@@ -24,6 +24,8 @@ use Illuminate\Support\Str;
 use Lang;
 use Redirect;
 
+use App\Model\helpdesk\Manage\Help_topic;
+
 /**
  * ArticleController
  * This controller is used to CRUD Articles.
@@ -45,8 +47,12 @@ class ArticleController extends Controller
     {
         // checking authentication
         $this->middleware('auth');
+
         // checking roles
-        $this->middleware('roles');
+        // $this->middleware('roles');
+        // checking if role is agent
+        $this->middleware('role.agent');
+
         SettingsController::language();
     }
 
@@ -166,6 +172,19 @@ class ArticleController extends Controller
         $requests = $request->input('category_id');
         $id = $article->id;
 
+        // buat kategori topik tiket otomatis
+        $helptopic = new Help_topic;
+        $helptopic->topic = $sl;
+        $helptopic->department = 4;
+        $helptopic->priority = 2;
+        $helptopic->sla_plan = 1;
+        $helptopic->status = 1;
+        $helptopic->type = 1;
+        $helptopic->auto_response = 0;
+        $helptopic->slug = $slug;
+        $helptopic->save();
+
+
         foreach ($requests as $req) {
             DB::insert('insert into kb_article_relationship (category_id, article_id) values (?,?)', [$req, $id]);
         }
@@ -204,6 +223,7 @@ class ArticleController extends Controller
         /* Get the selected article with id */
         $article = $article->whereId($id)->first();
         /* send to the edit page */
+
         try {
             return view('themes.default1.agent.kb.article.edit', compact('assign', 'article', 'category'));
         } catch (Exception $e) {
@@ -233,6 +253,15 @@ class ArticleController extends Controller
         $slug = Str::slug($sl, '-');
         // dd($slug);
 
+        // update halaman topic juga
+        // $topic = new Help_topic;
+        $topic = Help_topic::where('slug', $aid['slug'])->update(
+            array(
+                'slug' => $slug,
+                'topic' => $request->input('name')
+            )
+        );
+
         $article->slug = $slug;
         /* get the attribute of relation table where id==$id */
         $relation = $relation->where('article_id', $id);
@@ -244,6 +273,7 @@ class ArticleController extends Controller
         foreach ($requests as $req) {
             DB::insert('insert into kb_article_relationship (category_id, article_id) values (?,?)', [$req, $id]);
         }
+
         /* update the value to the table */
         try {
             $article->fill($request->all())->save();
@@ -265,7 +295,7 @@ class ArticleController extends Controller
      *
      * @return Response
      */
-    public function destroy($slug, Article $article, Relationship $relation, Comment $comment)
+    public function destroy($slug, Article $article, Relationship $relation, Comment $comment, Help_topic $topic)
     {
         /* delete the selected article from the table */
         $article = $article->where('slug', $slug)->first(); //get the selected article via id
@@ -281,6 +311,10 @@ class ArticleController extends Controller
         if ($relation) {
             $relation->delete();
         }
+
+        // delete topic
+        $topics = $topic->where('slug', $slug)->delete();
+
         if ($article) {
             if ($article->delete()) {//true:redirect to index page with success message
                 return redirect('article')->with('success', Lang::get('lang.article_deleted_successfully'));

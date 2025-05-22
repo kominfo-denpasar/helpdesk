@@ -1,7 +1,7 @@
 @extends('themes.default1.client.layout.client')
 
 @section('title')
-Category List -
+Kategori Layanan -
 @stop
 
 @section('kb')
@@ -30,7 +30,7 @@ class = "nav-item active"
     <div class="row">
 
         @foreach($categorys as $category)
-        <div class="col-md-6">
+        <div class="col-md-12">
             {{-- get the article_id where category_id == current category --}}
             <?php
             $all = App\Model\kb\Relationship::where('category_id', $category->id)->get();
@@ -53,7 +53,7 @@ class = "nav-item active"
                      <a href="{{url('category-list/'.$category->slug)}}">{{$category->name}}</a>
                 </h1>
 
-                <ul class="fa-ul" style="min-height: 150px;">
+                <ul class="fa-ul">
                     <?php foreach ($article_id as $id) {
                     ?>
                     <?php
@@ -82,7 +82,7 @@ class = "nav-item active"
                     @endforelse
                 <?php } ?>
                 </ul>
-                <p class="more-link text-center"><a href="{{url('category-list/'.$category->slug)}}" class="btn btn-custom btn-sm" style="background-color: #009aba; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.view_all') !!}</a></p>
+                <!-- <p class="more-link text-center"><a href="{{url('category-list/'.$category->slug)}}" class="btn btn-custom btn-sm" style="background-color: #009aba; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.view_all') !!}</a></p> -->
             </section>
         </div>
         @endforeach

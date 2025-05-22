@@ -5,7 +5,7 @@
     
         <meta charset="UTF-8" ng-app="myApp">
     
-        <title>Faveo | HELP DESK</title>
+        <title>Dashboard Agen | Portal Bantuan</title>
     
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     
@@ -187,6 +187,8 @@
 
                     @include('themes.default1.update.notification')
 
+                    <?php
+                    /*
                     <li class="nav-item dropdown notifications-menu" id="myDropdown">
 
                         <a href="#" class="nav-link" data-toggle="dropdown" onclick="myFunction()">
@@ -314,6 +316,8 @@
                             </ul>
                         </div>
                     </li>
+                    */
+                    ?>
 
                     <li class="nav-item dropdown">
 
@@ -370,8 +374,8 @@
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="main-sidebar elevation-4 sidebar-dark-black">
 
-                <a href="http://www.faveohelpdesk.com" class="brand-link " style="text-align: center;">
-                    <img src="{{ asset('lb-faveo/media/images/logo.png')}}" class="brand-image" alt="Company Log0">
+                <a href="{{ url('/') }}" class="brand-link navbar-dark" style="text-align: center;">
+                    <img src="{{ asset('uploads/company/1657.logo-bantuan.png')}}" class="brand-image" alt="Company Log0">
                 </a>
 
                 <div class="sidebar">
@@ -612,14 +616,14 @@
                     <div class="container-fluid">
                         
                         @if($dummy_installation == 1 || $dummy_installation == '1')
-                        <div class="alert alert-info alert-dismissible">
+                        <!-- <div class="alert alert-info alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                             <i class="icon fas  fa-exclamation-triangle"></i> @if (\Auth::user()->role == 'admin')
                                 {{Lang::get('lang.dummy_data_installation_message')}} <a href="{{route('clean-database')}}">{{Lang::get('lang.click')}}</a> {{Lang::get('lang.clear-dummy-data')}}
                             @else
                                 {{Lang::get('lang.clear-dummy-data-agent-message')}}
                             @endif
-                        </div>
+                        </div> -->
                         @elseif (!$is_mail_conigured)
                         <div class="row">
                             <div class="col-md-12">

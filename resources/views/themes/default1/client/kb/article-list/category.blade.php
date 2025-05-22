@@ -51,26 +51,26 @@ class = "nav-item active"
 
                 <header class="entry-header">
 
-                    <i class="fa fa-list-alt fa-2x fa-fw float-left text-muted"></i>
+                    <i class="fa fa-asterisk fa-fw float-left text-muted"></i>
 
-                    <h2 class="entry-title h4">
-
+                    <h4 class="entry-title h4">
                         <a href="{{url('show/'.$arti->slug)}}" onclick="toggle_visibility('foo');">{{$arti->name}}</a>
-                    </h2>
+                    </h4>
                 </header>
 
                 <?php $str = $arti->description; ?>
                 <?php $excerpt = App\Http\Controllers\Client\kb\UserController::getExcerpt($str, $startPos = 0, $maxLength = 400); ?>
 
                 <blockquote class="blockquote archive-description" id="block" style="margin-bottom: 10px; margin-top: 10px;">
-
-                    <?php $content = trim(preg_replace("/<img[^>]+\>/i", "", $excerpt), " \t.") ?>
-                    <p>{!! strip_tags($content) !!}</p>
-
-                    <p><a href="{{url('show/'.$arti->slug)}}">{!! Lang::get('lang.read_more') !!}</a></p>
+                    <small>
+                        <a class="btn btn-sm btn-primary" href="{{url('show/'.$arti->slug)}}"><i class="fa fa-info-circle"></i> &nbsp;{!! Lang::get('lang.read_more') !!}</a>
+                        @if($arti->rules!==null)
+                        <a class="btn btn-sm btn-warning" href="{{url('rule/'.$arti->slug)}}"><i class="fa fa-edit"></i> &nbsp;{!! Lang::get('lang.rules') !!}</a>
+                        @endif
+                    </small>
                 </blockquote>
 
-                <footer class="entry-footer">
+                <!-- <footer class="entry-footer">
 
                     <div class="entry-meta text-muted">
 
@@ -79,7 +79,7 @@ class = "nav-item active"
                             <span>{{$arti->created_at->format('l, d-m-Y')}}</span>
                         </span>
                     </div>
-                </footer>
+                </footer> -->
             </article>
             @empty
             <p>No articles available</p>

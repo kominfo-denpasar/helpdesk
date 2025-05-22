@@ -27,7 +27,7 @@ Route::middleware('web')->group(function () {
     Route::middleware('install', 'update')->group(function () {
         \Illuminate\Support\Facades\Auth::routes();
         Route::post('login', [Auth\AuthController::class, 'postLogin'])->name('post.login');
-        Route::post('auth/register', [Auth\AuthController::class, 'postRegister'])->name('post.register');
+        // Route::post('auth/register', [Auth\AuthController::class, 'postRegister'])->name('post.register');
         Route::post('password/reset', [Auth\PasswordController::class, 'reset'])->name('post.reset');
         Route::get('auth/logout', [Auth\AuthController::class, 'getLogout'])->name('get.logout');
         Route::get('social/login/redirect/{provider}/{redirect?}', [Auth\AuthController::class, 'redirectToProvider'])->name('social.login');
@@ -50,12 +50,12 @@ Route::middleware('web')->group(function () {
     });
 
     // register page
-    Route::get('auth/register/{one?}/{two?}/{three?}/{four?}/{five?}', [Auth\AuthController::class, 'getRegister'])->name('auth.register');
-    Breadcrumbs::register('auth.register', function ($breadcrumbs) {
-        $breadcrumbs->parent('/');
-        $breadcrumbs->push('Login', url('auth/login'));
-        $breadcrumbs->push('Create Account', url('auth/register'));
-    });
+    // Route::get('auth/register/{one?}/{two?}/{three?}/{four?}/{five?}', [Auth\AuthController::class, 'getRegister'])->name('auth.register');
+    // Breadcrumbs::register('auth.register', function ($breadcrumbs) {
+    //     $breadcrumbs->parent('/');
+    //     $breadcrumbs->push('Login', url('auth/login'));
+    //     $breadcrumbs->push('Create Account', url('auth/register'));
+    // });
 
     // Auth login
     Route::get('auth/login/{one?}/{two?}/{three?}/{four?}/{five?}', [Auth\AuthController::class, 'getLogin'])->name('auth.login');
@@ -297,6 +297,8 @@ Route::middleware('web')->group(function () {
       |
      */
     Route::middleware('install', 'update', 'auth', 'role.agent')->group(function () {
+        // Route::get('comment', [Agent\helpdesk\UserController::class, 'comment'])->name('comment');
+
         Route::post('chart-range/{date1}/{date2}', [Agent\helpdesk\DashboardController::class, 'ChartData'])->name('post.chart');
         Route::get('agen1', [Agent\helpdesk\DashboardController::class, 'ChartData']);
         Route::post('chart-range', [Agent\helpdesk\DashboardController::class, 'ChartData'])->name('post.chart');
@@ -318,7 +320,7 @@ Route::middleware('web')->group(function () {
         Route::get('organization-autofill', [Agent\helpdesk\OrganizationController::class, 'organizationAutofill'])->name('post.organization.autofill'); //auto fill organization name
         Route::get('org/delete/{id}', [Agent\helpdesk\OrganizationController::class, 'destroy'])->name('org.delete');
         Route::get('org-chart/{id}', [Agent\helpdesk\OrganizationController::class, 'orgChartData'])->name('org-chart-data');
-//    Route::post('org-chart-range', ['as' => 'post.org.chart', 'uses' => 'Agent\helpdesk\OrganizationController@orgChartData']);
+        // Route::post('org-chart-range', ['as' => 'post.org.chart', 'uses' => 'Agent\helpdesk\OrganizationController@orgChartData']);
         Route::post('org-chart-range/{id}/{date1}/{date2}', [Agent\helpdesk\OrganizationController::class, 'orgChartData'])->name('post.org.chart');
         Route::get('profile', [Agent\helpdesk\UserController::class, 'getProfile'])->name('profile'); /*  User profile get  */
 
@@ -383,12 +385,13 @@ Route::middleware('web')->group(function () {
         Route::get('/get-parent-tickets/{id}', [Agent\helpdesk\TicketController::class, 'getParentTickets'])->name('get.parent.ticket');
         Route::patch('/merge-tickets/{id}', [Agent\helpdesk\TicketController::class, 'mergeTickets'])->name('merge.tickets');
         //To get department tickets data
-//        //open tickets of department
-//        Route::get('/get-open-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getOpenTickets'])->name('get.dept.open');
-//        //close tickets of deartment
-//        Route::get('/get-closed-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getCloseTickets'])->name('get.dept.close');
-//        //in progress ticket of department
-//        Route::get('/get-under-process-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getInProcessTickets'])->name('get.dept.inprocess');
+        
+        // //open tickets of department
+        // Route::get('/get-open-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getOpenTickets'])->name('get.dept.open');
+        // //close tickets of deartment
+        // Route::get('/get-closed-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getCloseTickets'])->name('get.dept.close');
+        // //in progress ticket of department
+        // Route::get('/get-under-process-tickets/{id}', [Agent\helpdesk\Ticket2Controller::class, 'getInProcessTickets'])->name('get.dept.inprocess');
 
         // route for graphical reporting
         Route::get('report', [Agent\helpdesk\ReportController::class, 'index'])->name('report.index'); /* To show dashboard pages */
@@ -404,14 +407,14 @@ Route::middleware('web')->group(function () {
         /*
          * Label
          */
-//        Route::get('labels-ticket', [Admin\helpdesk\Label\LabelController::class, 'attachTicket'])->name('labels.ticket');
-//        Route::get('json-labels', [Admin\helpdesk\Label\LabelController::class, 'getLabel'])->name('labels.json');
+        // Route::get('labels-ticket', [Admin\helpdesk\Label\LabelController::class, 'attachTicket'])->name('labels.ticket');
+        // Route::get('json-labels', [Admin\helpdesk\Label\LabelController::class, 'getLabel'])->name('labels.json');
 
         /*
          * Tags
          */
-//        Route::get('add-tag', [Agent\helpdesk\Filter\TagController::class, 'addToFilter'])->name('tag.add');
-//        Route::get('get-tag', [Agent\helpdesk\Filter\TagController::class, 'getTag'])->name('tag.get');
+        Route::get('add-tag', [Agent\helpdesk\Filter\TagController::class, 'addToFilter'])->name('tag.add');
+        Route::get('get-tag', [Agent\helpdesk\Filter\TagController::class, 'getTag'])->name('tag.get');
 
         Route::middleware('force.option', 'role.agent')->group(function () {
             Route::get('tickets', [Agent\helpdesk\TicketController::class, 'getTicketsView'])->name('tickets-view');
@@ -519,13 +522,15 @@ Route::middleware('web')->group(function () {
     Route::get('/', [Client\helpdesk\WelcomepageController::class, 'index'])->name('/');
 
     Route::get('create-ticket', [Client\helpdesk\FormController::class, 'getForm'])->name('form'); //getform
+    Route::get('create-ticket/{id}', [Client\helpdesk\FormController::class, 'getFormCat'])->name('form-cat'); //getformcat
+    
     Route::get('mytickets/{id}', [Client\helpdesk\GuestController::class, 'singleThread'])->name('ticketinfo'); //detail ticket information
     Route::post('checkmyticket', [Client\helpdesk\UnAuthController::class, 'PostCheckTicket']); //ticket ckeck
 
     Route::get('check_ticket/{id}', [Client\helpdesk\GuestController::class, 'get_ticket_email'])->name('check_ticket'); //detail ticket information
 
     // show ticket via have a ticket
-    Route::get('show-ticket/{id}/{code}', [Client\helpdesk\UnAuthController::class, 'showTicketCode'])->name('show.ticket'); //detail ticket information
+    Route::get('show-ticket/{id}/{token}', [Client\helpdesk\UnAuthController::class, 'showTicketCode'])->name('show.ticket'); //detail ticket information
 
     //testing ckeditor
     //===================================================================================
@@ -699,6 +704,7 @@ Route::middleware('web')->group(function () {
 
     /* get the selected article */
     Route::get('show/{slug}', [Client\kb\UserController::class, 'show'])->name('show');
+    Route::get('rule/{slug}', [Client\kb\UserController::class, 'rule'])->name('rule');
 
     Route::get('category-list', [Client\kb\UserController::class, 'getCategoryList'])->name('category-list');
 
@@ -709,7 +715,8 @@ Route::middleware('web')->group(function () {
     Route::post('show/rating2/{id}', [Client\helpdesk\UnAuthController::class, 'ratingReply'])->name('show.rating2'); /* Get reply Ratings */
     Route::get('show/change-status/{status}/{id}', [Client\helpdesk\UnAuthController::class, 'changeStatus'])->name('show.change.status'); /* Get reply Ratings */
     /* get the home page */
-    Route::get('knowledgebase', [Client\kb\UserController::class, 'home'])->name('home');
+    // Route::get('knowledgebase', [Client\kb\UserController::class, 'home'])->name('home');
+    Route::get('knowledgebase', [Client\kb\UserController::class, 'getCategoryList'])->name('home');
     /* get the faq value to user */
     // $router->get('faq',['as'=>'faq' , 'uses'=>'Client\kb\UserController@Faq'] );
     /* get the cantact page to user */

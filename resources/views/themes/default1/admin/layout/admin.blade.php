@@ -152,6 +152,8 @@
 
                     @include('themes.default1.update.notification')
 
+                    <?php
+                        /*
                     <li class="nav-item dropdown notifications-menu" id="myDropdown">
 
                         <a href="#" class="nav-link" data-toggle="dropdown" onclick="myFunction()">
@@ -160,7 +162,6 @@
 
                             <span class="badge badge-warning navbar-badge" id="count">{!! $notifications->count() !!}</span>
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
 
                             <div id="alert11" class="alert alert-success alert-dismissable" style="display:none;">
@@ -280,6 +281,8 @@
                             </ul>
                         </div>
                     </li>
+                    */
+                    ?>
 
                     <li class="nav-item dropdown">
 
@@ -336,8 +339,8 @@
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="main-sidebar elevation-4 sidebar-dark-orange">
 
-                <a href="http://www.faveohelpdesk.com" class="brand-link navbar-dark" style="text-align: center;">
-                    <img src="{{ asset('lb-faveo/media/images/logo.png')}}" class="brand-image" alt="Company Log0">
+                <a href="{{ url('/') }}" class="brand-link navbar-dark" style="text-align: center;">
+                    <img src="{{ asset('uploads/company/logo-backend.png')}}" class="brand-image" alt="Company Log0">
                 </a>
 
                 <!-- sidebar: style can be found in sidebar.less -->
@@ -730,11 +733,11 @@
 
                     @if($dummy_installation == 1 || $dummy_installation == '1')
 
-                    <div class="alert alert-info alert-dismissible">
+                    <!-- <div class="alert alert-info alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <i class="icon fas  fa-exclamation-triangle"></i> {{Lang::get('lang.dummy_data_installation_message')}}
                         <a href="{{route('clean-database')}}">{{Lang::get('lang.click')}}</a> {{Lang::get('lang.clear-dummy-data')}}
-                    </div>
+                    </div> -->
 
                     @elseif (!$is_mail_conigured)
                     <div class="row">

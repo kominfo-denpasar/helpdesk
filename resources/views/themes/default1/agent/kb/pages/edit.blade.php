@@ -142,14 +142,14 @@ class="nav-item menu-open"
         $("textarea").summernote({
             height: 300,
             tabsize: 2,
-            toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']]
-          ]
+        //     toolbar: [
+        //     ['style', ['bold', 'italic', 'underline', 'clear']],
+        //     ['font', ['strikethrough', 'superscript', 'subscript']],
+        //     ['fontsize', ['fontsize']],
+        //     ['color', ['color']],
+        //     ['para', ['ul', 'ol', 'paragraph']],
+        //     ['height', ['height']]
+        //   ]
         });
     });
 </script>

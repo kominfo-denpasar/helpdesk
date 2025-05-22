@@ -64,16 +64,16 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
 
                 <div class="col-sm-9">
 
-                    <h3 class="entry-title"><i class="fas fa-ticket-alt"> </i> {{$thread->title}}
-
-                        <small> ( {{$tickets->ticket_number}} ) </small>
+                    <h3 class="entry-title"> 
+                        <small>[{{$tickets->ticket_number}}]</small>
+                        <br>{{$thread->title}}
                     </h3>
                 </div>
 
                 <div class="col-sm-3 text-right">
 
                     @if( $common_setting->status == '1')
-
+                    <!--
                     <div>
 
                         <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: whitesmoke">
@@ -102,6 +102,7 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                             </a>
                         </div>
                     </div>
+                    -->
                     @endif
                 {!! Form::close() !!}
                 </div>
@@ -171,7 +172,7 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                                 $sla = $tickets->sla;
                                 $SlaPlan = App\Model\helpdesk\Manage\Sla_plan::where('id', '=', $sla)->first();
                                 ?>
-                                <b>{!! Lang::get('lang.sla_plan') !!}: {{$SlaPlan->grace_period}} </b>
+                                <b>{!! Lang::get('lang.sla_plan') !!}: {{$SlaPlan->grace_period}} (Jam)</b>
                             </div>
                             <div class="col-md-3">
                                 <b>{!! Lang::get('lang.created_date') !!}: </b> {{ UTC::usertimezone($tickets->created_at) }}
@@ -378,6 +379,9 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                                         }, 0);
                                     </script>
                                 @else
+                                    <div class="embed-responsive{{$conversation->id}} embed-responsive-16by9">
+                                        <div class="reply">{!! $conversation->purify(true) !!}</div>
+                                    </div>
                                 @endif
 
 
@@ -385,7 +389,7 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                                 <?php $ticket_form_datas = App\Model\helpdesk\Ticket\Ticket_Form_Data::where('ticket_id', '=', $tickets->id)->get(); ?>
                                 @if(isset($ticket_form_datas))
 
-                                <br/>
+                                <!-- <br/>
                                 <table class="table">
 
                                     <tbody>
@@ -396,11 +400,10 @@ $thread = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', \Cryp
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                </table>
+                                </table> -->
                                 @endif
                                 @endif
                             </div><!-- .comment-content -->
-                            <br/><br/>
 
                             <div class="timeline-footer">
 
