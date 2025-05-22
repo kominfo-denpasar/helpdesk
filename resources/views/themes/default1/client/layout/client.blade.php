@@ -303,6 +303,7 @@
                                                                 class="btn btn-custom btn-sm text-white profile_btn"
                                                                 style="background-color: #003379; hov: #00c0ef; color: #fff ">{!! Lang::get('lang.dashboard') !!}</a>
                                                         @endif
+
                                                     @endif
                                                     @if (Auth::user())
                                                         @if (Auth::user()->role == 'user')
@@ -388,6 +389,7 @@
                                         class="form-group has-feedback @if (isset($errors)) {!! $errors->has('email') ? 'has-error' : '' !!} @endif">
                                         {!! Form::text('email', null, ['placeholder' => Lang::get('lang.e-mail'), 'class' => 'form-control']) !!}
                                     </div>
+
                                     <div
                                         class="form-group has-feedback @if (isset($errors)) {!! $errors->has('password') ? 'has-error' : '' !!} @endif">
                                         {!! Form::password('password', ['placeholder' => Lang::get('lang.password'), 'class' => 'form-control']) !!}
@@ -736,7 +738,6 @@
             });
         </script>
         <!--Start of Tawk.to Script-->
-
         <!-- <script type="text/javascript">
 
             var Tawk_API = Tawk_API || {},

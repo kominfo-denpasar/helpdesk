@@ -2,6 +2,7 @@
 
 return [
    /*
+
       |----------------------------------------------------------------------------------------
       | Authentication Pages [English(en)]
       |----------------------------------------------------------------------------------------
@@ -12,11 +13,13 @@ return [
       |
      */
 
-   /*
+    /*
+
       |--------------------------------------
       |   Error
       |--------------------------------------
      */
+  
    'success'                                                        => 'Success',
    'fails'                                                          => 'Fails',
    'alert'                                                          => 'Alert',
@@ -36,7 +39,8 @@ return [
    'otp-input-title'                                                => 'Enter 6 digits OTP code.',
    'otp-expired'                                                    => 'Your OTP has been expired.<br/> Click on "Resend OTP" to recieve a new OTP code on your mobile.',
    'resend-otp-title'                                               => 'Click here to resend OTP',
-   /*
+   
+  /*
       |--------------------------------------
       |   Login Page
       |--------------------------------------
@@ -217,9 +221,9 @@ return [
       |  Templates Create Page
       |--------------------------------------
      */
-   'template_set_to_clone' => 'Template set to clone',
-   'language'              => 'Language',
-   /*
+    'template_set_to_clone' => 'Template set to clone',
+    'language'              => 'Language',
+    /*
       |--------------------------------------
       |  Diagnostics Page
       |--------------------------------------
@@ -501,6 +505,7 @@ return [
       | Plugin Settings
       |--------------------------------------
      */
+
    'add_plugin'            => 'Add plugin',
    'plugins'               => 'Plugins',
    'upload'                => 'Upload',
